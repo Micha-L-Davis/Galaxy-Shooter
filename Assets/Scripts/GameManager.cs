@@ -7,8 +7,15 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private bool _gameIsOver = false;
+    [SerializeField]
+    private GameObject _asteroidPrefab;
 
-     void Update()
+    private void Start()
+    {
+        Instantiate(_asteroidPrefab, new Vector3(0, 3.7f, 0), Quaternion.identity);
+    }
+
+    void Update()
     {
         if (_gameIsOver == true && Input.GetKeyDown(KeyCode.R))
         {

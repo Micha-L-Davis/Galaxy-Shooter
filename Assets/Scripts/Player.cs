@@ -29,6 +29,16 @@ public class Player : MonoBehaviour
     private GameObject _shields;
     [SerializeField]
     private int _score;
+    [SerializeField]
+    private GameObject _leftEngine, _rightEngine;
+    private bool _leftDamage = false;
+    private bool _rightDamage = false;
+    //variable to store audio clip
+    [SerializeField]
+    private AudioClip _laserSfx;
+    [SerializeField]
+    private GameObject _explosionPrefab;
+    private AudioSource _audio;
 
     void Start()
     {
@@ -42,6 +52,11 @@ public class Player : MonoBehaviour
         if (_uIManager == null)
         {
             Debug.LogError("The UI Manager is NULL");
+        }
+        _audio = GetComponent<AudioSource>();
+        if (_audio == null)
+        {
+            Debug.LogError("The Player Audio Source is NULL");
         }
     }
 
@@ -87,7 +102,10 @@ public class Player : MonoBehaviour
         {
             Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
         }
-        
+
+        //play audio clip
+        _audio.clip = _laserSfx;
+        _audio.Play();
     }
     public void Damage()
     {
@@ -99,12 +117,47 @@ public class Player : MonoBehaviour
         }
 
         _lives--;
+        //if lives is 2 
+        //damage random engine
+        //if lives is 1
+        //damage other engine
+        if (_lives == 2)
+        {
+            int hitLocation = Random.Range(0, 2);  // 0 is left engine, 1 is right engine
+            if (hitLocation == 0)
+            {
+                _leftEngine.SetActive(true);
+                _leftDamage = true;
+            }
+            else
+            {
+                _rightEngine.SetActive(true);
+                _rightDamage = true;
+            }
+        }
+        else if (_lives == 1)
+        {
+            if (_leftDamage == true)
+            {
+                _rightEngine.SetActive(true);
+                _rightDamage = true;
+            }
+            else
+            {
+                _leftEngine.SetActive(true);
+                _rightDamage = true;
+            }
+        }
+
         _uIManager.UpdateLives(_lives);
        
+
         if (_lives < 1)
         {
-          _spawnManager.OnPlayerDeath();
-          Destroy(this.gameObject);
+            _spawnManager.OnPlayerDeath();
+            _speed = 1;
+            GameObject explosion = Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+            Destroy(this.gameObject, 0.5f);
         }
     }
 
