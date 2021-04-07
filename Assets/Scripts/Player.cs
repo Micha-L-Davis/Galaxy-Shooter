@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField]
-    private float _speed = 3.5f;
+    private float _speed = 5f;
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
@@ -16,16 +16,32 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _lives = 3;
     private SpawnManager _spawnManager;
+    private UIManager _uIManager;
     [SerializeField]
     private bool _tripleShotActive = false;
+    [SerializeField]
+    private bool _speedBoostActive = false;
+    [SerializeField]
+    private float _boostFactor = 2;
+    [SerializeField]
+    private bool _shieldsActive = false;
+    [SerializeField]
+    private GameObject _shields;
+    [SerializeField]
+    private int _score;
+
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
-
         if (_spawnManager == null)
         {
             Debug.LogError("The Spawn Manager is NULL");
+        }
+        _uIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        if (_uIManager == null)
+        {
+            Debug.LogError("The UI Manager is NULL");
         }
     }
 
@@ -75,10 +91,19 @@ public class Player : MonoBehaviour
     }
     public void Damage()
     {
+        if (_shieldsActive == true)
+        {
+            _shieldsActive = false;
+            _shields.SetActive(false);
+            return;
+        }
+
         _lives--;
+        _uIManager.UpdateLives(_lives);
        
         if (_lives < 1)
         {
+          _spawnManager.OnPlayerDeath();
           Destroy(this.gameObject);
         }
     }
@@ -88,6 +113,23 @@ public class Player : MonoBehaviour
         _tripleShotActive = true;
         StartCoroutine(TripleShotPowerDownRoutine());
     }
+    public void SpeedBoostGet()
+    {
+        _speedBoostActive = true;
+        _speed *= _boostFactor;
+        StartCoroutine(SpeedBoostPowerDownRoutine());
+    }
+    public void SheildsGet()
+    {
+        _shieldsActive = true;
+        _shields.SetActive(true);
+    }
+
+    public void AddScore(int points)
+    {
+        _score += points;
+        _uIManager.UpdateScoreText(_score);
+    }
 
     IEnumerator TripleShotPowerDownRoutine()
     {
@@ -95,6 +137,15 @@ public class Player : MonoBehaviour
         {
             yield return new WaitForSeconds(5f);
             _tripleShotActive = false;
+        }
+    }
+    IEnumerator SpeedBoostPowerDownRoutine()
+    {
+        while (_speedBoostActive == true)
+        {
+            yield return new WaitForSeconds(5f);
+            _speed /= _boostFactor;
+            _speedBoostActive = false;
         }
     }
 }

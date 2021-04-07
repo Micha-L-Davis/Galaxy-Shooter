@@ -6,7 +6,16 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 4;
-  
+    private Player _player;
+
+    private void Start()
+    {
+        _player = GameObject.Find("Player").GetComponent<Player>();
+        if (_player == null)
+        {
+            Debug.LogError("Player is NULL!");
+        }
+    }
     void Update()
     {
 
@@ -20,17 +29,14 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")
-        {
-            Player player = other.transform.GetComponent<Player>();
-            if (player != null)
-            {
-                player.Damage();
-            }
-            
+        {            
+            _player.Damage();
             Destroy(this.gameObject);
         }
         else if (other.tag == "Laser")
         {
+            int randomScore = Random.Range(5, 11);
+            _player.AddScore(randomScore);
             Destroy(other.gameObject);
             Destroy(this.gameObject);
         }
