@@ -36,6 +36,8 @@ public class Player : MonoBehaviour
     private int _lives = 3;
     [SerializeField]
     private float _fireRate = 0.15f;
+    [SerializeField]
+    private int _ammoCount = 15;
 
     private float _canFire = -1f;
     private int _shieldStrength = 0;
@@ -116,18 +118,36 @@ public class Player : MonoBehaviour
     }
     void FireLaser()
     {
-        _canFire = Time.time + _fireRate;
-        if (_tripleShotActive == true)
+        if (_ammoCount > 0)
         {
-            Instantiate(_tripleShotPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
+            _canFire = Time.time + _fireRate;
+
+            if (_tripleShotActive == true)
+            {
+                Instantiate(_tripleShotPrefab, transform.position + new Vector3(0.06f, 0.75f, 0), Quaternion.identity);
+                _ammoCount -= 3;
+                if (_ammoCount < 0) { _ammoCount = 0; }
+            }
+            else
+            {
+                Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
+                _ammoCount -= 1;
+            }
+
+            _audio.clip = _laserSfx;
+            _audio.Play();
         }
         else
         {
-            Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
+            //notify the player there is no ammo.
+            Debug.Log("Out of Ammunition!");
         }
 
-        _audio.clip = _laserSfx;
-        _audio.Play();
+        UIManager uimanager = _uIManager.transform.GetComponent<UIManager>();
+        if (uimanager != null)
+        {
+            uimanager.Ammo_UI_Update(_ammoCount);
+        }
     }
     public void Damage()
     {
