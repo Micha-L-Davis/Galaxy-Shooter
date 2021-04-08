@@ -154,17 +154,13 @@ public class Player : MonoBehaviour
         if (_shieldStrength == 3)
         {
             _shieldStrength--;
-            Debug.Log("Shield Strength: " + _shieldStrength);
             _shieldSprite.color = new Color(1f, 1f, 1f, 0.66f);
-            Debug.Log("Shield Alpha: " + _shieldSprite.color.a);
             return;
         }
         else if (_shieldStrength == 2)
         {
             _shieldStrength--;
-            Debug.Log("Shield Strength: " + _shieldStrength);
             _shieldSprite.color = new Color(1f, 1f, 1f, 0.33f);
-            Debug.Log("Shield Alpha: " + _shieldSprite.color.a);
             return;
         }
         else if (_shieldStrength == 1)
@@ -241,6 +237,24 @@ public class Player : MonoBehaviour
         if (uimanager != null)
         {
             uimanager.Ammo_UI_Update(_ammoCount);
+        }
+    }
+    public void RepairGet()
+    {
+        if (_lives < 3)
+        {
+            _lives ++;
+            _uIManager.UpdateLives(_lives);
+        }
+        if (_leftDamage == true)
+        {
+            _leftEngine.SetActive(false);
+            _leftDamage = false;
+        }
+        else if (_rightDamage == true)
+        {
+            _rightEngine.SetActive(false);
+            _rightDamage = false;
         }
     }
 
