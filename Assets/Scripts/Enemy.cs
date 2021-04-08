@@ -57,6 +57,7 @@ public class Enemy : MonoBehaviour
         }
         else if (other.tag == "Laser")
         {
+             Destroy(other.gameObject);
             int randomScore = Random.Range(5, 11);
             _player.AddScore(randomScore);
             //trigger explosion anim
@@ -64,8 +65,9 @@ public class Enemy : MonoBehaviour
             _animator.SetTrigger("OnEnemyDeath");
             _audio.clip = _explosion_Sfx;
             _audio.Play();
+            Destroy(GetComponent<Collider2D>());
             Destroy(this.gameObject, 2.3f);
-            Destroy(other.gameObject);
+           
         }
     }
 }
