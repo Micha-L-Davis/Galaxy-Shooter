@@ -7,38 +7,46 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speed = 5f;
     [SerializeField]
+    private float _afterburner = 1.5f;
+    [SerializeField]
+    private float _boostFactor = 2;
+
+    [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
     private GameObject _tripleShotPrefab;
+    [SerializeField]
+    private GameObject _explosionPrefab;
+    [SerializeField]
+    private GameObject _shields;
+    [SerializeField]
+    private GameObject _leftEngine, _rightEngine;
+    [SerializeField]
+    private GameObject _thrusters;
+    [SerializeField]
+    private AudioClip _laserSfx;
+
+    private AudioSource _audio;
+    private SpawnManager _spawnManager;
+    private UIManager _uIManager;
+
+    [SerializeField]
+    private int _score;
     [SerializeField]
     private float _fireRate = 0.15f;
     private float _canFire = -1f;
     [SerializeField]
     private int _lives = 3;
-    private SpawnManager _spawnManager;
-    private UIManager _uIManager;
+    private bool _leftDamage = false;
+    private bool _rightDamage = false;
+
     [SerializeField]
     private bool _tripleShotActive = false;
     [SerializeField]
-    private bool _speedBoostActive = false;
-    [SerializeField]
-    private float _boostFactor = 2;
+    private bool _speedBoostActive = false;   
     [SerializeField]
     private bool _shieldsActive = false;
-    [SerializeField]
-    private GameObject _shields;
-    [SerializeField]
-    private int _score;
-    [SerializeField]
-    private GameObject _leftEngine, _rightEngine;
-    private bool _leftDamage = false;
-    private bool _rightDamage = false;
-    //variable to store audio clip
-    [SerializeField]
-    private AudioClip _laserSfx;
-    [SerializeField]
-    private GameObject _explosionPrefab;
-    private AudioSource _audio;
+    
 
     void Start()
     {
@@ -68,6 +76,19 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             FireLaser();
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            _speed = _speed + _afterburner;
+            _thrusters.transform.localScale = new Vector3(1, 1.5f, 1);
+            _thrusters.transform.position = new Vector3(_thrusters.transform.position.x, _thrusters.transform.position.y - 0.4f, 0);
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            _speed = _speed + (_afterburner * -1);
+            _thrusters.transform.localScale = new Vector3(1, 1, 1);
+            _thrusters.transform.position = new Vector3(_thrusters.transform.position.x, _thrusters.transform.position.y + 0.4f, 0);
         }
 
     }   
