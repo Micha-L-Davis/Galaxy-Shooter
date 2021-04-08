@@ -234,6 +234,15 @@ public class Player : MonoBehaviour
         _shieldSprite.color = new Color(1f, 1f, 1f, 1f);
         Debug.Log("Shield Alpha: " + _shieldSprite.color.a);
     }
+    public void AmmoGet()
+    {
+        _ammoCount = 15;
+        UIManager uimanager = _uIManager.transform.GetComponent<UIManager>();
+        if (uimanager != null)
+        {
+            uimanager.Ammo_UI_Update(_ammoCount);
+        }
+    }
 
     public void AddScore(int points)
     {
