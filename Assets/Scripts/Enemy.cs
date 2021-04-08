@@ -12,6 +12,9 @@ public class Enemy : MonoBehaviour
     private AudioSource _audio;
     [SerializeField]
     private AudioClip _explosion_Sfx;
+    [SerializeField]
+    private GameObject _enemyLaserPrefab;
+    private bool _canfire = true;
 
 
     private void Start()
@@ -32,6 +35,7 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("The Enemy audio source is NULL");
         }
+        StartCoroutine(EnemyLaserFireRoutine());
     }
     void Update()
     {
@@ -41,6 +45,7 @@ public class Enemy : MonoBehaviour
         {
             transform.position = new Vector3(Random.Range(-10, 10), 8, 0);
         }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -68,6 +73,16 @@ public class Enemy : MonoBehaviour
             Destroy(GetComponent<Collider2D>());
             Destroy(this.gameObject, 2.3f);
            
+        }
+    }
+    IEnumerator EnemyLaserFireRoutine()
+    {
+        float randomTime = Random.Range(3, 7);
+        while (_canfire == true)
+        {
+            yield return new WaitForSeconds(randomTime);
+            Instantiate(_enemyLaserPrefab, transform.position + new Vector3(0, -0.5f, 0), Quaternion.identity);
+            Debug.Log("AHM SHOOOOOTIN'");
         }
     }
 }

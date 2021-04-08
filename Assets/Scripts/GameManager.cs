@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(1); //current scene
          
         }
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
     public void GameIsOver()
     {
