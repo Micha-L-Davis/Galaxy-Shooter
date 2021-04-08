@@ -52,6 +52,7 @@ public class Enemy : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            _canfire = false;
             _player.Damage();
             _speed = 1.75f;            
             _animator.SetTrigger("OnEnemyDeath");
@@ -62,10 +63,10 @@ public class Enemy : MonoBehaviour
         }
         else if (other.tag == "Laser")
         {
-             Destroy(other.gameObject);
+            _canfire = false;
+            Destroy(other.gameObject);
             int randomScore = Random.Range(5, 11);
             _player.AddScore(randomScore);
-            //trigger explosion anim
             _speed = 1.75f;
             _animator.SetTrigger("OnEnemyDeath");
             _audio.clip = _explosion_Sfx;
@@ -82,7 +83,6 @@ public class Enemy : MonoBehaviour
         {
             yield return new WaitForSeconds(randomTime);
             Instantiate(_enemyLaserPrefab, transform.position + new Vector3(0, -0.5f, 0), Quaternion.identity);
-            Debug.Log("AHM SHOOOOOTIN'");
         }
     }
 }

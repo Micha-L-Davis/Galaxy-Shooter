@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _explosionPrefab;
     [SerializeField]
-    private GameObject _shields;
+    private SpriteRenderer _shieldSprite;
     [SerializeField]
     private GameObject _leftEngine, _rightEngine;
     [SerializeField]
@@ -33,10 +33,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _score;
     [SerializeField]
-    private float _fireRate = 0.15f;
-    private float _canFire = -1f;
-    [SerializeField]
     private int _lives = 3;
+    [SerializeField]
+    private float _fireRate = 0.15f;
+
+    private float _canFire = -1f;
+    private int _shieldStrength = 0;
     private bool _leftDamage = false;
     private bool _rightDamage = false;
 
@@ -124,24 +126,36 @@ public class Player : MonoBehaviour
             Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
         }
 
-        //play audio clip
         _audio.clip = _laserSfx;
         _audio.Play();
     }
     public void Damage()
     {
-        if (_shieldsActive == true)
+        if (_shieldStrength == 3)
         {
-            _shieldsActive = false;
-            _shields.SetActive(false);
+            _shieldStrength--;
+            Debug.Log("Shield Strength: " + _shieldStrength);
+            _shieldSprite.color = new Color(1f, 1f, 1f, 0.66f);
+            Debug.Log("Shield Alpha: " + _shieldSprite.color.a);
+            return;
+        }
+        else if (_shieldStrength == 2)
+        {
+            _shieldStrength--;
+            Debug.Log("Shield Strength: " + _shieldStrength);
+            _shieldSprite.color = new Color(1f, 1f, 1f, 0.33f);
+            Debug.Log("Shield Alpha: " + _shieldSprite.color.a);
+            return;
+        }
+        else if (_shieldStrength == 1)
+        {
+            _shieldStrength--;
+            _shieldSprite.color = new Color(1f, 1f, 1f, 0f);
             return;
         }
 
-        _lives--;
-        //if lives is 2 
-        //damage random engine
-        //if lives is 1
-        //damage other engine
+            _lives--;
+     
         if (_lives == 2)
         {
             int hitLocation = Random.Range(0, 2);  // 0 is left engine, 1 is right engine
@@ -195,8 +209,10 @@ public class Player : MonoBehaviour
     }
     public void SheildsGet()
     {
-        _shieldsActive = true;
-        _shields.SetActive(true);
+        _shieldStrength = 3;
+        Debug.Log("Shield Strength: " + _shieldStrength);
+        _shieldSprite.color = new Color(1f, 1f, 1f, 1f);
+        Debug.Log("Shield Alpha: " + _shieldSprite.color.a);
     }
 
     public void AddScore(int points)
