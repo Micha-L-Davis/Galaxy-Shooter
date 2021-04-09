@@ -53,6 +53,9 @@ public class Powerup : MonoBehaviour
                     case 4:
                         player.RepairGet();
                         break;
+                    case 5:
+                        player.BlackHoleCannonGet();
+                        break;
                     default:
                         Debug.Log("Default Value");
                         break;

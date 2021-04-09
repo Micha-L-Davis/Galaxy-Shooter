@@ -7,19 +7,15 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _speed = 4;
     private Player _player;
-    //animator handle
     private Animator _animator;
     private AudioSource _audio;
     [SerializeField]
     private AudioClip _explosion_Sfx;
     [SerializeField]
     private GameObject _enemyLaserPrefab;
-    private bool _canfire = true;
-
 
     private void Start()
     {
-        //animator getcomponent
         _animator = gameObject.GetComponent<Animator>();
         if (_animator == null)
         {
@@ -52,7 +48,7 @@ public class Enemy : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            _canfire = false;
+            StopCoroutine(EnemyLaserFireRoutine());
             _player.Damage();
             _speed = 1.75f;            
             _animator.SetTrigger("OnEnemyDeath");
@@ -63,7 +59,7 @@ public class Enemy : MonoBehaviour
         }
         else if (other.tag == "Laser")
         {
-            _canfire = false;
+            StopCoroutine(EnemyLaserFireRoutine());
             Destroy(other.gameObject);
             int randomScore = Random.Range(5, 11);
             _player.AddScore(randomScore);
@@ -79,7 +75,7 @@ public class Enemy : MonoBehaviour
     IEnumerator EnemyLaserFireRoutine()
     {
         float randomTime = Random.Range(3, 7);
-        while (_canfire == true)
+        while (true)
         {
             yield return new WaitForSeconds(randomTime);
             Instantiate(_enemyLaserPrefab, transform.position + new Vector3(0, -0.5f, 0), Quaternion.identity);

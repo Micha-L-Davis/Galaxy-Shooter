@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _explosionPrefab;
     [SerializeField]
+    private GameObject _blackHolePrefab;
+    [SerializeField]
     private SpriteRenderer _shieldSprite;
     [SerializeField]
     private GameObject _leftEngine, _rightEngine;
@@ -50,6 +52,8 @@ public class Player : MonoBehaviour
     private bool _speedBoostActive = false;   
     [SerializeField]
     private bool _shieldsActive = false;
+    [SerializeField]
+    private bool _blackHoleCannonActive = false;
     
 
     void Start()
@@ -127,6 +131,10 @@ public class Player : MonoBehaviour
                 Instantiate(_tripleShotPrefab, transform.position + new Vector3(0.06f, 0.75f, 0), Quaternion.identity);
                 _ammoCount -= 3;
                 if (_ammoCount < 0) { _ammoCount = 0; }
+            }
+            else if (_blackHoleCannonActive == true)
+            {
+                Instantiate(_blackHolePrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
             }
             else
             {
@@ -257,6 +265,12 @@ public class Player : MonoBehaviour
             _rightDamage = false;
         }
     }
+    public void BlackHoleCannonGet()
+    {
+        _blackHoleCannonActive = true;
+        StartCoroutine(BlackHoleCannonPowerDownRoutine());
+
+    }
 
     public void AddScore(int points)
     {
@@ -279,6 +293,14 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(5f);
             _speed /= _boostFactor;
             _speedBoostActive = false;
+        }
+    }
+    IEnumerator BlackHoleCannonPowerDownRoutine()
+    {
+        while (_blackHoleCannonActive == true)
+        {
+            yield return new WaitForSeconds(5f);
+            _blackHoleCannonActive = false;
         }
     }
 }

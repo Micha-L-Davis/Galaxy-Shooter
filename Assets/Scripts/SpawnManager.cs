@@ -39,7 +39,16 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(randomT);
         while (_stopSpawning == false)
         {
-            int randomPowerUp = Random.Range(0, 5);
+            int randomPowerUp = Random.Range(0, 6);
+            if (randomPowerUp == 5)
+            {
+                Debug.Log("Powerup is " + randomPowerUp + "! Rolling to confirm black hole cannon");
+                int randomPowerUp2 = Random.Range(3, 6);
+                //generate a random int between 0 and 6
+                //randomPowerUp is that number
+                randomPowerUp = randomPowerUp2;
+                Debug.Log("new powerup is " + randomPowerUp);
+            }
             float randomX = Random.Range(-9.5f, 9.5f);
             Instantiate(_powerups[randomPowerUp], new Vector3(randomX, 8, 0), Quaternion.identity);
             yield return new WaitForSeconds(randomT);
