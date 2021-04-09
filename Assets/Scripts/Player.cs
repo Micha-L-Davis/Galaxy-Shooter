@@ -27,20 +27,34 @@ public class Player : MonoBehaviour
     private GameObject _thrusters;
     [SerializeField]
     private AudioClip _laserSfx;
+    [SerializeField]
+    private float _boostDrainRate = .5f;
+    [SerializeField]
+    private float _boostRechargeRate = 1f;
+    [SerializeField]
+    private float _boostCooldown = 1f;
 
+    private BoostBar _boostBar;
     private AudioSource _audio;
     private SpawnManager _spawnManager;
     private UIManager _uIManager;
+
 
     [SerializeField]
     private int _score;
     [SerializeField]
     private int _lives = 3;
     [SerializeField]
+    private float _boostFuel = 100;
+    [SerializeField]
+    public float _boostMax = 100;
+    [SerializeField]
     private float _fireRate = 0.15f;
     [SerializeField]
     private int _ammoCount = 15;
 
+    [SerializeField]
+    private bool _isBoosting = false;
     private float _canFire = -1f;
     private int _shieldStrength = 0;
     private bool _leftDamage = false;
@@ -49,12 +63,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     private bool _tripleShotActive = false;
     [SerializeField]
-    private bool _speedBoostActive = false;   
+    private bool _speedBoostActive = false;
     [SerializeField]
     private bool _shieldsActive = false;
     [SerializeField]
     private bool _blackHoleCannonActive = false;
-    
+
 
     void Start()
     {
@@ -74,6 +88,11 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("The Player Audio Source is NULL");
         }
+        _boostBar = GameObject.Find("Boost_Bar").GetComponent<BoostBar>();
+        if (_boostBar == null)
+        {
+            Debug.LogError("The Boost Bar is NULL");
+        }
     }
 
 
@@ -88,18 +107,18 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            _speed = _speed + _afterburner;
-            _thrusters.transform.localScale = new Vector3(1, 1.5f, 1);
-            _thrusters.transform.position = new Vector3(_thrusters.transform.position.x, _thrusters.transform.position.y - 0.4f, 0);
+            AfterburnersOn();
         }
         else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            _speed = _speed + (_afterburner * -1);
-            _thrusters.transform.localScale = new Vector3(1, 1, 1);
-            _thrusters.transform.position = new Vector3(_thrusters.transform.position.x, _thrusters.transform.position.y + 0.4f, 0);
+            if (_isBoosting == true)
+            {
+                AfterburnersOff();
+            }
+            
         }
 
-    }   
+    }
     void CalculateMovement()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -178,8 +197,8 @@ public class Player : MonoBehaviour
             return;
         }
 
-            _lives--;
-     
+        _lives--;
+
         if (_lives == 2)
         {
             int hitLocation = Random.Range(0, 2);  // 0 is left engine, 1 is right engine
@@ -209,7 +228,7 @@ public class Player : MonoBehaviour
         }
 
         _uIManager.UpdateLives(_lives);
-       
+
 
         if (_lives < 1)
         {
@@ -251,7 +270,7 @@ public class Player : MonoBehaviour
     {
         if (_lives < 3)
         {
-            _lives ++;
+            _lives++;
             _uIManager.UpdateLives(_lives);
         }
         if (_leftDamage == true)
@@ -272,6 +291,68 @@ public class Player : MonoBehaviour
 
     }
 
+    public void AfterburnersOn()
+    {
+        _isBoosting = true;
+        _speed += _afterburner;
+
+       // _thrusters.transform.localScale = new Vector3(1, 1.5f, 1);
+       // _thrusters.transform.position = new Vector3(_thrusters.transform.position.x, _thrusters.transform.position.y - 0.4f, 0);
+
+        
+        StartCoroutine(BoostDrainRoutine());
+    }
+
+    public void AfterburnersOff()
+    {
+        _isBoosting = false;
+        _speed += _afterburner * -1;
+
+       // _thrusters.transform.localScale = new Vector3(1, 1, 1);
+       // _thrusters.transform.position = new Vector3(_thrusters.transform.position.x, _thrusters.transform.position.y + 0.4f, 0);
+
+        
+        StartCoroutine(BoostRechargeRoutine());
+    }
+    IEnumerator BoostDrainRoutine()
+    {
+        StopCoroutine(BoostRechargeRoutine());
+        while (_isBoosting == true)
+        {
+            if (_boostFuel > 0)
+            {
+                _boostFuel -= _boostDrainRate;
+                yield return new WaitForSeconds(0.01f);
+                _boostBar.UpdateBoostBar(_boostFuel);
+            }
+            else if (_boostFuel <= 0)
+            {
+                AfterburnersOff();
+                yield break;
+            }
+
+        }
+
+    }
+    IEnumerator BoostRechargeRoutine()
+    {
+        StopCoroutine(BoostDrainRoutine());
+        yield return new WaitForSeconds(_boostCooldown);
+        while (_isBoosting == false)
+        {
+            if (_boostFuel < _boostMax)
+            {
+                _boostFuel += _boostRechargeRate;
+                yield return new WaitForSeconds(0.02f);
+                _boostBar.UpdateBoostBar(_boostFuel);
+            }
+            else
+            {
+                yield break;
+            }
+
+        }
+    }
     public void AddScore(int points)
     {
         _score += points;
@@ -303,4 +384,5 @@ public class Player : MonoBehaviour
             _blackHoleCannonActive = false;
         }
     }
+    
 }
