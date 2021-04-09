@@ -26,6 +26,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _thrusters;
     [SerializeField]
+    private CameraShake _camera;
+    [SerializeField]
     private AudioClip _laserSfx;
     [SerializeField]
     private float _boostDrainRate = .5f;
@@ -92,6 +94,11 @@ public class Player : MonoBehaviour
         if (_boostBar == null)
         {
             Debug.LogError("The Boost Bar is NULL");
+        }
+        _camera = GameObject.Find("Main Camera").GetComponent<CameraShake>();
+        if (_camera == null)
+        {
+            Debug.LogError("The Main Camera is NULL");
         }
     }
 
@@ -181,23 +188,27 @@ public class Player : MonoBehaviour
         if (_shieldStrength == 3)
         {
             _shieldStrength--;
+            _camera.ShakeCamera(.025f);
             _shieldSprite.color = new Color(1f, 1f, 1f, 0.66f);
             return;
         }
         else if (_shieldStrength == 2)
         {
             _shieldStrength--;
+            _camera.ShakeCamera(.05f);
             _shieldSprite.color = new Color(1f, 1f, 1f, 0.33f);
             return;
         }
         else if (_shieldStrength == 1)
         {
             _shieldStrength--;
+            _camera.ShakeCamera(.075f);
             _shieldSprite.color = new Color(1f, 1f, 1f, 0f);
             return;
         }
 
         _lives--;
+        _camera.ShakeCamera(.1f);
 
         if (_lives == 2)
         {
@@ -296,8 +307,8 @@ public class Player : MonoBehaviour
         _isBoosting = true;
         _speed += _afterburner;
 
-       // _thrusters.transform.localScale = new Vector3(1, 1.5f, 1);
-       // _thrusters.transform.position = new Vector3(_thrusters.transform.position.x, _thrusters.transform.position.y - 0.4f, 0);
+       _thrusters.transform.localScale = new Vector3(1, 1.5f, 1);
+       _thrusters.transform.position = new Vector3(_thrusters.transform.position.x, _thrusters.transform.position.y - 0.4f, 0);
 
         
         StartCoroutine(BoostDrainRoutine());
@@ -308,8 +319,8 @@ public class Player : MonoBehaviour
         _isBoosting = false;
         _speed += _afterburner * -1;
 
-       // _thrusters.transform.localScale = new Vector3(1, 1, 1);
-       // _thrusters.transform.position = new Vector3(_thrusters.transform.position.x, _thrusters.transform.position.y + 0.4f, 0);
+       _thrusters.transform.localScale = new Vector3(1, 1, 1);
+       _thrusters.transform.position = new Vector3(_thrusters.transform.position.x, _thrusters.transform.position.y + 0.4f, 0);
 
         
         StartCoroutine(BoostRechargeRoutine());

@@ -1345,6 +1345,7 @@ GameObject:
   - component: {fileID: 1280493728}
   - component: {fileID: 1280493727}
   - component: {fileID: 1280493730}
+  - component: {fileID: 1280493731}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1477,6 +1478,21 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &1280493731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280493726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2a4474110c945647a65ea5745c38a8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _intensity: 0
+  _settle_rate: 0
+  _wiggle: 0.25
 --- !u!1 &1411844071
 GameObject:
   m_ObjectHideFlags: 0
@@ -1865,10 +1881,11 @@ MonoBehaviour:
   _leftEngine: {fileID: 1614185033}
   _rightEngine: {fileID: 350778052}
   _thrusters: {fileID: 1938248383}
+  _camera: {fileID: 0}
   _laserSfx: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _boostDrainRate: 5
   _boostRechargeRate: 5
-  _boostCooldown: 3
+  _boostCooldown: 1.5
   _score: 0
   _lives: 3
   _boostFuel: 400
