@@ -62,10 +62,14 @@ public class SpawnManager : MonoBehaviour
     private void SpawnEnemy()
     {
         float randomX = Random.Range(-9.5f, 9.5f);
-        _enemyList.Add(Instantiate(_basicPrefab, new Vector3(randomX, 8, 0), Quaternion.identity));
+        Transform newBasicEnemy = Instantiate(_basicPrefab, new Vector3(randomX, 8, 0), Quaternion.identity);
+        newBasicEnemy.parent = GameObject.Find("Enemy_Container").transform;
+        _enemyList.Add(newBasicEnemy);
 
         randomX = Random.Range(-9.5f, 9.5f);
-        _enemyList.Add(Instantiate(_weaverPrefab, new Vector3(randomX, 12, 0), Quaternion.identity));
+        Transform newWeaverEnemy = Instantiate(_weaverPrefab, new Vector3(randomX, 12, 0), Quaternion.identity);
+        newBasicEnemy.parent = GameObject.Find("Enemy_Container").transform;
+        _enemyList.Add(newWeaverEnemy);
     }
 
     IEnumerator SpawnPowerupRoutine()
