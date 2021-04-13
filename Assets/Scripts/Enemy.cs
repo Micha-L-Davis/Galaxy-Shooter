@@ -52,7 +52,8 @@ public class Enemy : MonoBehaviour
         MoveMe();
         if (transform.position.y <= -6f)
         {
-            transform.position = new Vector3(0, 8f, 0);
+            float randomX = Random.Range(-9.5f, 9.5f);
+            transform.position = new Vector3(randomX, 8f, 0);
         }
     }
 

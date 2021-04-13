@@ -70,7 +70,7 @@ public class Player : MonoBehaviour
     private bool _shieldsActive = false;
     [SerializeField]
     private bool _blackHoleCannonActive = false;
-
+    private bool _SlowNegaActive = false;
 
     void Start()
     {
@@ -302,6 +302,13 @@ public class Player : MonoBehaviour
 
     }
 
+    public void SlowNegaGet()
+    {
+        _speed *= 0.5f;
+        _SlowNegaActive = true;
+        StartCoroutine(SlowNegaPowerDownRoutine());
+    }
+
     public void AfterburnersOn()
     {
         _isBoosting = true;
@@ -395,5 +402,13 @@ public class Player : MonoBehaviour
             _blackHoleCannonActive = false;
         }
     }
-    
+    IEnumerator SlowNegaPowerDownRoutine()
+    {
+        while (_SlowNegaActive == true)
+        {
+            yield return new WaitForSeconds(5f);
+            _speed /= 0.5f;
+            _SlowNegaActive = false;
+        }
+    }
 }

@@ -56,6 +56,9 @@ public class Powerup : MonoBehaviour
                     case 5:
                         player.BlackHoleCannonGet();
                         break;
+                    case 6:
+                        player.SlowNegaGet();
+                        break;
                     default:
                         Debug.Log("Default Value");
                         break;

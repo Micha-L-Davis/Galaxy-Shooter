@@ -61,13 +61,13 @@ public class SpawnManager : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        float randomX = Random.Range(-9.5f, 9.5f);
-        Transform newBasicEnemy = Instantiate(_basicPrefab, new Vector3(randomX, 8, 0), Quaternion.identity);
+        float randomXB = Random.Range(-9.5f, 9.5f);
+        Transform newBasicEnemy = Instantiate(_basicPrefab, new Vector3(randomXB, 8, 0), Quaternion.identity);
         newBasicEnemy.parent = GameObject.Find("Enemy_Container").transform;
         _enemyList.Add(newBasicEnemy);
 
-        randomX = Random.Range(-9.5f, 9.5f);
-        Transform newWeaverEnemy = Instantiate(_weaverPrefab, new Vector3(randomX, 12, 0), Quaternion.identity);
+        float randomXW = Random.Range(-9.5f, 9.5f);
+        Transform newWeaverEnemy = Instantiate(_weaverPrefab, new Vector3(randomXW, 12, 0), Quaternion.identity);
         newBasicEnemy.parent = GameObject.Find("Enemy_Container").transform;
         _enemyList.Add(newWeaverEnemy);
     }
@@ -78,11 +78,18 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(randomT);
         while (_stopSpawning == false)
         {
-            int randomPowerUp = Random.Range(0, 6);
+            int randomPowerUp = Random.Range(0, 7);
             if (randomPowerUp == 5)
             {
                 Debug.Log("Powerup is " + randomPowerUp + "! Rolling to confirm black hole cannon");
-                int randomPowerUp2 = Random.Range(3, 6);
+                int randomPowerUp2 = Random.Range(0, 7);
+                randomPowerUp = randomPowerUp2;
+                Debug.Log("new powerup is " + randomPowerUp);
+            }
+            else if (randomPowerUp == 7)
+            {
+                Debug.Log("Powerup is " + randomPowerUp + "! Rolling to confirm slow Negaup");
+                int randomPowerUp2 = Random.Range(0, 7);
                 randomPowerUp = randomPowerUp2;
                 Debug.Log("new powerup is " + randomPowerUp);
             }
