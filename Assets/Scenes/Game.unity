@@ -1881,7 +1881,7 @@ MonoBehaviour:
   _leftEngine: {fileID: 1614185033}
   _rightEngine: {fileID: 350778052}
   _thrusters: {fileID: 1938248383}
-  _camera: {fileID: 0}
+  _camera: {fileID: 1280493731}
   _laserSfx: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _boostDrainRate: 5
   _boostRechargeRate: 5
@@ -2321,7 +2321,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 314f60a8361822648bcd780f46913e45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefab: {fileID: 4003783252727456141, guid: 232abd448b7a9cf49b837b805627f6ea,
+  _basicPrefab: {fileID: 5761908283043819572, guid: be818bb45ac4e0e4da4b17c1e37d1419,
+    type: 3}
+  _weaverPrefab: {fileID: 2118317003554890724, guid: 54668583d9bfc2a4b83c3486e274a557,
     type: 3}
   _waitTime: 5
   _enemyContainer: {fileID: 811182074}
@@ -2332,6 +2334,7 @@ MonoBehaviour:
   - {fileID: 8374126655000072045, guid: 92b2735ac0778074ea1f6f1484861904, type: 3}
   - {fileID: 2199609823644208750, guid: aa8b7b1d577604148be707ad9c274f7c, type: 3}
   - {fileID: 6189603552133681084, guid: dafdbddef3b657d4698bf932ba4afef6, type: 3}
+  _waveCount: 0
 --- !u!4 &1840658234
 Transform:
   m_ObjectHideFlags: 0

@@ -6,7 +6,6 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private float _ySpeed = 4;
-    private float _xSpeed;
     private Player _player;
     private Animator _animator;
     private AudioSource _audio;
@@ -16,11 +15,12 @@ public class Enemy : MonoBehaviour
     private GameObject _enemyLaserPrefab;
     private int _numberOfUpdates = 0;
     private float _time;
+    private float _amplitude = 200;
+    private bool _isDead = false;
     [SerializeField]
-    private float _frequency = 2;
+    private int _enemyID; //0 - Basic 1 - Weavers
     [SerializeField]
-    private float _amplitude = 10;
-
+    private SpawnManager _spawnManager;
 
     private void Start()
     {
@@ -40,20 +40,43 @@ public class Enemy : MonoBehaviour
             Debug.LogError("The Enemy audio source is NULL");
         }
         StartCoroutine(EnemyLaserFireRoutine());
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        if (_spawnManager == null)
+        {
+            Debug.LogError("Spawn Manager is NULL!");
+        }
     }
     void Update()
     {
-        _time ++;
-        //float currentX = transform.position.x;
-        //transform.Translate(Vector3.down * _speed * Time.deltaTime);
-        //sinusoidal movement
-        _xSpeed = (Mathf.Cos(_time * _frequency) * _amplitude * _frequency) * Time.deltaTime;
-        transform.Translate(new Vector2(_xSpeed, (_ySpeed * Time.deltaTime) * -1));
-        if (transform.position.y < -6.4f)
+        TrackTime();
+        MoveMe();
+        if (transform.position.y <= -6f)
         {
-            transform.position = new Vector3(Random.Range(-10, 10), 8, 0);
+            transform.position = new Vector3(0, 8f, 0);
         }
-        
+    }
+
+    private void TrackTime()
+    {
+        _time++;
+    }
+
+    private void MoveMe()
+    {
+        switch (_enemyID)
+        {
+            case 0: //Basic
+                transform.Translate(Vector3.down * _ySpeed * Time.deltaTime);
+                break;
+            case 1: //Weaver
+                float frequency = 0.025f;
+                float xSpeed = (Mathf.Cos(_time * frequency) * _amplitude * frequency) * Time.deltaTime;
+                transform.Translate(new Vector2(xSpeed, -_ySpeed * Time.deltaTime));
+                break;
+            default:
+                Debug.Log("Cannot MoveMe - Unknown Movement Type");
+                break;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -67,6 +90,7 @@ public class Enemy : MonoBehaviour
             _animator.SetTrigger("OnEnemyDeath");
             _audio.clip = _explosion_Sfx;
             _audio.Play();
+            _isDead = true;
             Destroy(this.gameObject, 2.3f);
 
         }
@@ -81,6 +105,7 @@ public class Enemy : MonoBehaviour
             _animator.SetTrigger("OnEnemyDeath");
             _audio.clip = _explosion_Sfx;
             _audio.Play();
+            _isDead = true;
             Destroy(GetComponent<Collider2D>());
             Destroy(this.gameObject, 2.3f);
            
@@ -89,7 +114,7 @@ public class Enemy : MonoBehaviour
     IEnumerator EnemyLaserFireRoutine()
     {
         float randomTime = Random.Range(3, 7);
-        while (true)
+        while (_isDead == false)
         {
             yield return new WaitForSeconds(randomTime);
             Instantiate(_enemyLaserPrefab, transform.position + new Vector3(0, -0.5f, 0), Quaternion.identity);

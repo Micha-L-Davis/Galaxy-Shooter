@@ -17,6 +17,8 @@ public class UIManager : MonoBehaviour
     private Sprite[] _liveSprites;
     [SerializeField]
     private GameObject _gameOverText;
+//    [SerializeField]
+//    private GameObject _waveIncomingText;
     [SerializeField]
     private GameObject _restartPrompt;
     private GameManager _gameManager;
@@ -28,6 +30,7 @@ public class UIManager : MonoBehaviour
         _ammoText.text = "Ammo: " + 15 + "/15";
         _gameOverText.SetActive(false);
         _restartPrompt.SetActive(false);
+        //_waveIncomingText.SetActive(false);
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
     }
 
@@ -49,6 +52,21 @@ public class UIManager : MonoBehaviour
             StartCoroutine(GameOverTextRoutine());
         }
     }
+
+//    public IEnumerator WaveIncomingTextRoutine(int waveNumber)
+//    {
+//        while (true)
+//        {
+//            Text text = _waveIncomingText.GetComponent<Text>();
+//            text.text = "WAVE " + waveNumber + " INCOMING!";
+//            _waveIncomingText.SetActive(true);
+//            yield return new WaitForSeconds(3f);
+//            _waveIncomingText.SetActive(false);
+//        }
+//        
+//
+  //  }
+
     IEnumerator GameOverTextRoutine()
     {
         while (true)
