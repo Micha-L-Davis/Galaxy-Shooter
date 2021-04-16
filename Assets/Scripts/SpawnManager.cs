@@ -10,6 +10,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private Transform _weaverPrefab;
     [SerializeField]
+    private Transform _porterPrefab;
+    [SerializeField]
     private float _waitTime = 5.0f;
     [SerializeField]
     private GameObject _enemyContainer;
@@ -54,22 +56,49 @@ public class SpawnManager : MonoBehaviour
         _waveCount++;
         for (int i = 0; i < _waveCount; i++)
         {
-            SpawnEnemy();
+            SpawnEnemy(_waveCount);
             yield return new WaitForSeconds(_waitTime);
         }
     }
 
-    private void SpawnEnemy()
+    private void SpawnEnemy(int waveCount)
     {
-        float randomXB = Random.Range(-9.5f, 9.5f);
-        Transform newBasicEnemy = Instantiate(_basicPrefab, new Vector3(randomXB, 8, 0), Quaternion.identity);
-        newBasicEnemy.parent = GameObject.Find("Enemy_Container").transform;
-        _enemyList.Add(newBasicEnemy);
+        if (waveCount < 3)
+        {
+            float randomXB = Random.Range(-9.5f, 9.5f);
+            Transform newBasicEnemy = Instantiate(_basicPrefab, new Vector3(randomXB, 8, 0), Quaternion.identity);
+            newBasicEnemy.parent = GameObject.Find("Enemy_Container").transform;
+            _enemyList.Add(newBasicEnemy);
+        }
+        else if (waveCount < 5)
+        {
+            float randomXB = Random.Range(-9.5f, 9.5f);
+            Transform newBasicEnemy = Instantiate(_basicPrefab, new Vector3(randomXB, 8, 0), Quaternion.identity);
+            newBasicEnemy.parent = GameObject.Find("Enemy_Container").transform;
+            _enemyList.Add(newBasicEnemy);
 
-        float randomXW = Random.Range(-9.5f, 9.5f);
-        Transform newWeaverEnemy = Instantiate(_weaverPrefab, new Vector3(randomXW, 12, 0), Quaternion.identity);
-        newBasicEnemy.parent = GameObject.Find("Enemy_Container").transform;
-        _enemyList.Add(newWeaverEnemy);
+            float randomXW = Random.Range(-9.5f, 9.5f);
+            Transform newWeaverEnemy = Instantiate(_weaverPrefab, new Vector3(randomXW, 12, 0), Quaternion.identity);
+            newBasicEnemy.parent = GameObject.Find("Enemy_Container").transform;
+            _enemyList.Add(newWeaverEnemy);
+        }
+        else if (waveCount > 4)
+        {
+            float randomXB = Random.Range(-9.5f, 9.5f);
+            Transform newBasicEnemy = Instantiate(_basicPrefab, new Vector3(randomXB, 8, 0), Quaternion.identity);
+            newBasicEnemy.parent = GameObject.Find("Enemy_Container").transform;
+            _enemyList.Add(newBasicEnemy);
+
+            float randomXW = Random.Range(-9.5f, 9.5f);
+            Transform newWeaverEnemy = Instantiate(_weaverPrefab, new Vector3(randomXW, 12, 0), Quaternion.identity);
+            newBasicEnemy.parent = GameObject.Find("Enemy_Container").transform;
+            _enemyList.Add(newWeaverEnemy);
+
+            float randomXP = Random.Range(-9.5f, 9.5f);
+            Transform newPorterEnemy = Instantiate(_porterPrefab, new Vector3(randomXP, 12, 0), Quaternion.identity);
+            newBasicEnemy.parent = GameObject.Find("Enemy_Container").transform;
+            _enemyList.Add(newPorterEnemy);
+        }
     }
 
     IEnumerator SpawnPowerupRoutine()

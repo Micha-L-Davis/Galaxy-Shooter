@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1767003518676486736}
   - component: {fileID: 5554247092328837215}
   - component: {fileID: 3527303334454878901}
-  - component: {fileID: 5905658448875281464}
   - component: {fileID: 3477171704014318000}
+  - component: {fileID: -3356286020830184384}
   m_Layer: 0
   m_Name: Enemy_Laser
   m_TagString: Untagged
@@ -110,18 +110,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.4971615, y: 2.748783}
   m_EdgeRadius: 0
---- !u!114 &5905658448875281464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4630619388445086322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b34691475becb44b957d560611e0fa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &3477171704014318000
 Rigidbody2D:
   serializedVersion: 4
@@ -143,3 +131,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-3356286020830184384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4630619388445086322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1354068ef2f58da44a9bf772c25ddf4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isEnemy: 1

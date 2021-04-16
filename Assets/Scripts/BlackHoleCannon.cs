@@ -10,14 +10,24 @@ public class BlackHoleCannon : MonoBehaviour
     private float _speed = 8f;
     [SerializeField]
     private float _rotationSpeed = 200f;
+    [SerializeField]
+    private bool _isEnemy;
 
     void Start()
     {
-        _target = GameObject.FindGameObjectWithTag("Enemy");
+        if (_isEnemy == true)
+        {
+            _target = GameObject.Find("Player");
+        }
+        else
+        {
+            _target = GameObject.FindGameObjectWithTag("Enemy");
+        }
+        
+
         if (_target == null)
         {
-            transform.Translate(Vector3.back * _speed);
-            Destroy(this.gameObject, 1);
+            Destroy(this.gameObject);
         }
         _rigidbody = GetComponent<Rigidbody2D>();
         StartCoroutine(EvaporationRoutine());
@@ -42,13 +52,24 @@ public class BlackHoleCannon : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, 8, 0);
         }
+
         if (_target == null)
         {
             _target = GameObject.FindGameObjectWithTag("Enemy");
         }
-
     }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Player" && _isEnemy == true)
+        {
+            Player player = other.GetComponent<Player>();
+            if (player != null)
+            {
+                player.Damage();
+            }
 
+        }
+    }
     void FixedUpdate()
     {
         if (_target != null)
@@ -68,8 +89,7 @@ public class BlackHoleCannon : MonoBehaviour
         {
             float randomTime = Random.Range(0.5f, 2);
             yield return new WaitForSeconds(randomTime);
-            transform.Translate(Vector3.back * _speed);
-            Destroy(this.gameObject, 1);
+            Destroy(this.gameObject);
         }
         
 
