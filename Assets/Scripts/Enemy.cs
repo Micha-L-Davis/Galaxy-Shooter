@@ -119,6 +119,7 @@ public class Enemy : MonoBehaviour
                 }
                 else
                 {
+                    transform.rotation = Quaternion.Euler(0, 0, 180);
                     transform.Translate(Vector3.up * _ySpeed * Time.deltaTime);
                 }               
                 break;
