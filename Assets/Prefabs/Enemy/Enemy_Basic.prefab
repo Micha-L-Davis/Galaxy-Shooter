@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ySpeed: 4
-  _enemyLaserPrefab: {fileID: 4630619388445086322, guid: e31a107689d40e7438b71e0f3db72564,
+  _enemyLaserPrefab: {fileID: 4630619388445086322, guid: ecd4ec57855226c4fa8d33eeaaa545f9,
     type: 3}
   _enemyBlackHolePrefab: {fileID: 6665049760305545565, guid: be339dffa700c0b4abbf57887bfe95d4,
     type: 3}

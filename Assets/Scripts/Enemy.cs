@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private int _enemyID; //0 - Basic, 1 - Weaver, 2 - Porter
 
+
     private void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();

@@ -6,41 +6,37 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField]
-    private Transform _basicPrefab;
-    [SerializeField]
-    private Transform _weaverPrefab;
-    [SerializeField]
-    private Transform _porterPrefab;
-    [SerializeField]
     private float _waitTime = 5.0f;
     [SerializeField]
     private GameObject _enemyContainer;
     [SerializeField]
-    private GameObject [] _powerups;
+    private GameObject[] _powerups;
+    [SerializeField]
+    private int[] _powerUpSpawnProb;
+    [SerializeField]
+    private GameObject[] _enemies;
+    private int[] _enemySpawnProb = new int[3];
+
     [SerializeField]
     private int _waveCount = 0;
-    private List<Transform> _enemyList = new List<Transform>();
+    private List<GameObject> _enemyList = new List<GameObject>();
     private bool _stopSpawning = false;
     UIManager _uIManager;
-    
+
     public void StartSpawning()
     {
         StartCoroutine(StartWaveSpawnerRoutine());
         StartCoroutine(SpawnPowerupRoutine());
     }
 
-   
+
     IEnumerator StartWaveSpawnerRoutine()
     {
         yield return new WaitForSeconds(3.5f);
         while (_stopSpawning == false)
         {
-            //spawning the wave
             yield return SpawnWaveRoutine();
-            //waiting for everything to die
             yield return new WaitWhile(EnemyisAlive);
-            //run the wave incoming text
-            //yield return EndOfWaveRoutine();
             yield return new WaitForSeconds(_waitTime);
         }
     }
@@ -54,50 +50,81 @@ public class SpawnManager : MonoBehaviour
     IEnumerator SpawnWaveRoutine()
     {
         _waveCount++;
+        AssignProbability();
         for (int i = 0; i < _waveCount; i++)
         {
-            SpawnEnemy(_waveCount);
+            SpawnEnemy();
             yield return new WaitForSeconds(_waitTime);
+        }
+
+    }
+
+    private void AssignProbability()
+    {
+        switch (_waveCount)
+        {
+            case 1:
+                _enemySpawnProb[0] = 80;
+                _enemySpawnProb[1] = 20;
+                _enemySpawnProb[2] = 0;
+                break;
+            case 3:
+                _enemySpawnProb[0] = 70;
+                _enemySpawnProb[1] = 25;
+                _enemySpawnProb[2] = 5;
+                break;
+            case 5:
+                _enemySpawnProb[0] = 60;
+                _enemySpawnProb[1] = 30;
+                _enemySpawnProb[2] = 10;
+                break;
+            case 9:
+                _enemySpawnProb[0] = 50;
+                _enemySpawnProb[1] = 30;
+                _enemySpawnProb[2] = 20;
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private void SpawnEnemy()
+    {
+        int randomEnemy = Random.Range(1, 101);
+        int low;
+        int high = 0;
+        for (int i = 0; i < _enemies.Length; i++)
+        {
+            low = high;
+            high += _enemySpawnProb[i];
+            if (randomEnemy >= low && randomEnemy < high)
+            {
+                Debug.Log("Low was " + low + " & high was " + high + ". Enemy " + i + " spawned.");
+                float randomX = Random.Range(-9.5f, 9.5f);
+                GameObject newEnemy = Instantiate(_enemies[i], new Vector3(randomX, 8, 0), Quaternion.identity);
+                newEnemy.transform.parent = GameObject.Find("Enemy_Container").transform;
+                _enemyList.Add(newEnemy);
+            }
         }
     }
 
-    private void SpawnEnemy(int waveCount)
+    private void SpawnPowerup()
     {
-        if (waveCount < 3)
+        int randomPowerUp = Random.Range(1, 101);
+        Debug.Log("Rolling for Powerup. Rolled a " + randomPowerUp);
+        int low;
+        int high = 0;
+        for (int i = 0; i < _powerups.Length; i++)
         {
-            float randomXB = Random.Range(-9.5f, 9.5f);
-            Transform newBasicEnemy = Instantiate(_basicPrefab, new Vector3(randomXB, 8, 0), Quaternion.identity);
-            newBasicEnemy.parent = GameObject.Find("Enemy_Container").transform;
-            _enemyList.Add(newBasicEnemy);
-        }
-        else if (waveCount < 5)
-        {
-            float randomXB = Random.Range(-9.5f, 9.5f);
-            Transform newBasicEnemy = Instantiate(_basicPrefab, new Vector3(randomXB, 8, 0), Quaternion.identity);
-            newBasicEnemy.parent = GameObject.Find("Enemy_Container").transform;
-            _enemyList.Add(newBasicEnemy);
-
-            float randomXW = Random.Range(-9.5f, 9.5f);
-            Transform newWeaverEnemy = Instantiate(_weaverPrefab, new Vector3(randomXW, 12, 0), Quaternion.identity);
-            newBasicEnemy.parent = GameObject.Find("Enemy_Container").transform;
-            _enemyList.Add(newWeaverEnemy);
-        }
-        else if (waveCount > 4)
-        {
-            float randomXB = Random.Range(-9.5f, 9.5f);
-            Transform newBasicEnemy = Instantiate(_basicPrefab, new Vector3(randomXB, 8, 0), Quaternion.identity);
-            newBasicEnemy.parent = GameObject.Find("Enemy_Container").transform;
-            _enemyList.Add(newBasicEnemy);
-
-            float randomXW = Random.Range(-9.5f, 9.5f);
-            Transform newWeaverEnemy = Instantiate(_weaverPrefab, new Vector3(randomXW, 12, 0), Quaternion.identity);
-            newBasicEnemy.parent = GameObject.Find("Enemy_Container").transform;
-            _enemyList.Add(newWeaverEnemy);
-
-            float randomXP = Random.Range(-9.5f, 9.5f);
-            Transform newPorterEnemy = Instantiate(_porterPrefab, new Vector3(randomXP, 12, 0), Quaternion.identity);
-            newBasicEnemy.parent = GameObject.Find("Enemy_Container").transform;
-            _enemyList.Add(newPorterEnemy);
+            low = high;
+            high += _powerUpSpawnProb[i];
+            if (randomPowerUp >= low && randomPowerUp < high)
+            {
+                Debug.Log("Low was " + low + " & high was " + high + ". Powerup " + i + " awarded.");
+                float randomX = Random.Range(-9.5f, 9.5f);
+                Instantiate(_powerups[i], new Vector3(randomX, 8, 0), Quaternion.identity);
+            }
         }
     }
 
@@ -107,23 +134,25 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(randomT);
         while (_stopSpawning == false)
         {
-            int randomPowerUp = Random.Range(0, 7);
-            if (randomPowerUp == 5)
-            {
-                Debug.Log("Powerup is " + randomPowerUp + "! Rolling to confirm black hole cannon");
-                int randomPowerUp2 = Random.Range(0, 7);
-                randomPowerUp = randomPowerUp2;
-                Debug.Log("new powerup is " + randomPowerUp);
-            }
-            else if (randomPowerUp == 7)
-            {
-                Debug.Log("Powerup is " + randomPowerUp + "! Rolling to confirm slow Negaup");
-                int randomPowerUp2 = Random.Range(0, 7);
-                randomPowerUp = randomPowerUp2;
-                Debug.Log("new powerup is " + randomPowerUp);
-            }
-            float randomX = Random.Range(-9.5f, 9.5f);
-            Instantiate(_powerups[randomPowerUp], new Vector3(randomX, 8, 0), Quaternion.identity);
+            SpawnPowerup();
+
+            //int randomPowerUp = Random.Range(0, 7);
+            //if (randomPowerUp == 5)
+            //{
+            //    Debug.Log("Powerup is " + randomPowerUp + "! Rolling to confirm black hole cannon");
+            //    int randomPowerUp2 = Random.Range(0, 7);
+            //    randomPowerUp = randomPowerUp2;
+            //    Debug.Log("new powerup is " + randomPowerUp);
+            //}
+            //else if (randomPowerUp == 7)
+            //{
+            //    Debug.Log("Powerup is " + randomPowerUp + "! Rolling to confirm slow Negaup");
+            //    int randomPowerUp2 = Random.Range(0, 7);
+            //    randomPowerUp = randomPowerUp2;
+            //    Debug.Log("new powerup is " + randomPowerUp);
+            //}
+            //float randomX = Random.Range(-9.5f, 9.5f);
+            //Instantiate(_powerups[randomPowerUp], new Vector3(randomX, 8, 0), Quaternion.identity);
             yield return new WaitForSeconds(randomT);
         }
 
