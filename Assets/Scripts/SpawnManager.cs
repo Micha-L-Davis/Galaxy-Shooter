@@ -15,7 +15,7 @@ public class SpawnManager : MonoBehaviour
     private int[] _powerUpSpawnProb;
     [SerializeField]
     private GameObject[] _enemies;
-    private int[] _enemySpawnProb = new int[3];
+    private int[] _enemySpawnProb = new int[4]; //increment size for each new kind of enemy
 
     [SerializeField]
     private int _waveCount = 0;
@@ -67,21 +67,25 @@ public class SpawnManager : MonoBehaviour
                 _enemySpawnProb[0] = 80;
                 _enemySpawnProb[1] = 20;
                 _enemySpawnProb[2] = 0;
+                _enemySpawnProb[3] = 0;
                 break;
             case 3:
                 _enemySpawnProb[0] = 70;
                 _enemySpawnProb[1] = 25;
                 _enemySpawnProb[2] = 5;
+                _enemySpawnProb[3] = 0;
                 break;
             case 5:
                 _enemySpawnProb[0] = 60;
                 _enemySpawnProb[1] = 30;
-                _enemySpawnProb[2] = 10;
+                _enemySpawnProb[2] = 9;
+                _enemySpawnProb[3] = 1;
                 break;
             case 9:
                 _enemySpawnProb[0] = 50;
                 _enemySpawnProb[1] = 30;
-                _enemySpawnProb[2] = 20;
+                _enemySpawnProb[2] = 15;
+                _enemySpawnProb[3] = 5;
                 break;
             default:
                 break;
