@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
     private float _amplitude = 200;
     private bool _isDead = false;
     [SerializeField]
-    private int _enemyID; //0 - Basic, 1 - Weaver, 2 - Porter, 3 - Shielder
+    private int _enemyID; //0 - Basic, 1 - Weaver, 2 - Porter, 3 - Shielder, 4 - Rammer
     private bool _shieldsUp;
     private Vector3 _initialVector = Vector3.zero;
     private Vector3 _secondVector = Vector3.zero;
@@ -42,6 +42,9 @@ public class Enemy : MonoBehaviour
                 _shieldsUp = true;
                 StartCoroutine(EnemyLaserFireRoutine());
                 StartCoroutine(ShielderMovementRoutine());
+                break;
+            case 4:
+                //No fire routine for this enemy.
                 break;
             default:
                 StartCoroutine(EnemyLaserFireRoutine());
@@ -102,7 +105,22 @@ public class Enemy : MonoBehaviour
                 {
                     transform.Translate(_secondVector * _ySpeed * Time.deltaTime);
                 }
-                
+                break;
+            case 4: //Rammer
+                float distanceToPlayer = Vector3.Distance(transform.position, _player.transform.position);
+                Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
+                if (distanceToPlayer <= 5)
+                {
+                    Vector2 direction = (Vector2)_player.transform.position - rigidbody.position;
+                    direction.Normalize();
+                    float rotateAmount = Vector3.Cross(direction, transform.up).z;
+                    rigidbody.angularVelocity = -rotateAmount * 500;
+                    rigidbody.velocity = transform.up * _ySpeed;
+                }
+                else
+                {
+                    transform.Translate(Vector3.up * _ySpeed * Time.deltaTime);
+                }               
                 break;
             default:
                 Debug.Log("Cannot MoveMe - Unknown Movement Type");

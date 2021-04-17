@@ -15,7 +15,7 @@ public class SpawnManager : MonoBehaviour
     private int[] _powerUpSpawnProb;
     [SerializeField]
     private GameObject[] _enemies;
-    private int[] _enemySpawnProb = new int[4]; //increment size for each new kind of enemy
+    private int[] _enemySpawnProb = new int[5]; //increment size for each new kind of enemy
 
     [SerializeField]
     private int _waveCount = 0;
@@ -64,28 +64,39 @@ public class SpawnManager : MonoBehaviour
         switch (_waveCount)
         {
             case 1:
-                _enemySpawnProb[0] = 80;
-                _enemySpawnProb[1] = 20;
+                _enemySpawnProb[0] = 75;
+                _enemySpawnProb[1] = 25;
                 _enemySpawnProb[2] = 0;
                 _enemySpawnProb[3] = 0;
+                _enemySpawnProb[4] = 0;
                 break;
             case 3:
-                _enemySpawnProb[0] = 70;
-                _enemySpawnProb[1] = 25;
+                _enemySpawnProb[0] = 25;
+                _enemySpawnProb[1] = 70;
                 _enemySpawnProb[2] = 5;
                 _enemySpawnProb[3] = 0;
+                _enemySpawnProb[4] = 0;
                 break;
             case 5:
-                _enemySpawnProb[0] = 60;
-                _enemySpawnProb[1] = 30;
-                _enemySpawnProb[2] = 9;
-                _enemySpawnProb[3] = 1;
+                _enemySpawnProb[0] = 65;
+                _enemySpawnProb[1] = 20;
+                _enemySpawnProb[2] = 10;
+                _enemySpawnProb[3] = 5;
+                _enemySpawnProb[4] = 0;
+                break;
+            case 7:
+                _enemySpawnProb[0] = 15;
+                _enemySpawnProb[1] = 40;
+                _enemySpawnProb[2] = 30;
+                _enemySpawnProb[3] = 15;
+                _enemySpawnProb[4] = 15;
                 break;
             case 9:
-                _enemySpawnProb[0] = 50;
-                _enemySpawnProb[1] = 30;
-                _enemySpawnProb[2] = 15;
-                _enemySpawnProb[3] = 5;
+                _enemySpawnProb[0] = 20;
+                _enemySpawnProb[1] = 20;
+                _enemySpawnProb[2] = 20;
+                _enemySpawnProb[3] = 20;
+                _enemySpawnProb[4] = 20;
                 break;
             default:
                 break;

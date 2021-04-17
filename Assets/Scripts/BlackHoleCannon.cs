@@ -30,6 +30,10 @@ public class BlackHoleCannon : MonoBehaviour
             Destroy(this.gameObject);
         }
         _rigidbody = GetComponent<Rigidbody2D>();
+        if (_rigidbody == null)
+        {
+            Debug.LogError("Rigidbody2D is NULL");
+        }
         StartCoroutine(EvaporationRoutine());
     }
 
