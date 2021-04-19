@@ -154,17 +154,17 @@ public class Player : MonoBehaviour
 
             if (_tripleShotActive == true)
             {
-                Instantiate(_tripleShotPrefab, transform.position + new Vector3(0.06f, 0.75f, 0), Quaternion.identity);
+                Instantiate(_tripleShotPrefab, transform.position + new Vector3(0.05f, 1.39f, 0), Quaternion.identity);
                 _ammoCount -= 3;
                 if (_ammoCount < 0) { _ammoCount = 0; }
             }
             else if (_blackHoleCannonActive == true)
             {
-                Instantiate(_blackHolePrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+                Instantiate(_blackHolePrefab, transform.position + new Vector3(0, 1.5f, 0), Quaternion.identity);
             }
             else
             {
-                Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
+                Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.5f, 0), Quaternion.identity);
                 _ammoCount -= 1;
             }
 
