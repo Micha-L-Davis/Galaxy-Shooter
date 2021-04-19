@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject _enemyLaserPrefab;
     [SerializeField]
+    private GameObject _enemyRearLaserPrefab;
+    [SerializeField]
     private GameObject _enemyBlackHolePrefab;
     [SerializeField]
     private GameObject _explosionPrefab;
@@ -23,6 +25,9 @@ public class Enemy : MonoBehaviour
     private Vector3 _secondVector = Vector3.zero;
     private bool _initialMove;
     private bool _secondMove;
+    [SerializeField]
+    private bool _canRearFire = false;
+    private float _rearFireCooldown = -1f;
 
 
     private void Start()
@@ -32,13 +37,29 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("Player is NULL!");
         }
-
+        int d10 = Random.Range(0, 10);
         switch (_enemyID)
         {
+            case 0:
+                if (d10 == 0)
+                {
+                    _canRearFire = true;
+                }
+                break;
+            case 1:
+                if (d10 == 0)
+                {
+                    _canRearFire = true;
+                }
+                break;
             case 2:
                 StartCoroutine(PorterMovementRoutine());
                 break;
             case 3:
+                if (d10 == 0)
+                {
+                    _canRearFire = true;
+                }
                 _shieldsUp = true;
                 StartCoroutine(EnemyLaserFireRoutine());
                 StartCoroutine(ShielderMovementRoutine());
@@ -55,6 +76,11 @@ public class Enemy : MonoBehaviour
     {
         TrackTime();
         MoveMe();
+        if (_canRearFire == true)
+        {
+            RearFire();
+        }
+      
         if (transform.position.x > 10f)
         {
             transform.position = new Vector3(-10f, transform.position.y, 0);
@@ -72,6 +98,7 @@ public class Enemy : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, 8f, 0);
         }
+        
     }
 
     private void TrackTime()
@@ -121,11 +148,23 @@ public class Enemy : MonoBehaviour
                 {
                     transform.rotation = Quaternion.Euler(0, 0, 180);
                     transform.Translate(Vector3.up * _ySpeed * Time.deltaTime);
-                }               
+                }
                 break;
             default:
                 Debug.Log("Cannot MoveMe - Unknown Movement Type");
                 break;
+        }
+    }
+    private void RearFire()
+    {
+        float directionToPlayer = Vector3.SignedAngle(_player.transform.position - transform.position, transform.up, Vector3.forward);
+        if (directionToPlayer < 10 && directionToPlayer > -10)
+        {
+            if (_isDead == false && Time.time > _rearFireCooldown)
+            {
+                Instantiate(_enemyRearLaserPrefab, transform.position + new Vector3(0, 1.2f, 0), Quaternion.identity);
+                _rearFireCooldown = Time.time + 2f;
+            }
         }
     }
 
@@ -181,13 +220,11 @@ public class Enemy : MonoBehaviour
         float randomTime = Random.Range(3, 7);
         while (_isDead == false)
         {
-            
             yield return new WaitForSeconds(randomTime);
             if (_isDead == false)
             {
                 Instantiate(_enemyLaserPrefab, transform.position + new Vector3(0, -0.5f, 0), Quaternion.identity);
             }
-            
         }
     }
     IEnumerator PorterMovementRoutine()

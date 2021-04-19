@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1699993507858270182}
   - component: {fileID: 6160259084694978581}
   m_Layer: 0
-  m_Name: EnemyTurnLeft0000_00000
+  m_Name: Body_Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,8 +67,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -317377755
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 3154912113cbb4a498df6f571c74e18c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 4950595643124854253}
   - component: {fileID: 6347329633149086248}
   m_Layer: 0
-  m_Name: EnemyTurnLeft0000_00000
+  m_Name: Body_Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,8 +148,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -317377755
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 3154912113cbb4a498df6f571c74e18c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -212,11 +212,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ySpeed: 0
   _enemyLaserPrefab: {fileID: 0}
+  _enemyRearLaserPrefab: {fileID: 0}
   _enemyBlackHolePrefab: {fileID: 2568716773884401744, guid: 9b0a83ded596c6143a1fbc9773f4a5e1,
     type: 3}
   _explosionPrefab: {fileID: 418433537383931242, guid: daa362500550df94b8e0170a4e956f62,
     type: 3}
   _enemyID: 2
+  _canRearFire: 0
 --- !u!70 &9107787823497822262
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

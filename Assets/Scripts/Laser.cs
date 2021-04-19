@@ -7,10 +7,12 @@ public class Laser : MonoBehaviour
     private float _speed = 8;
     [SerializeField]
     private bool _isEnemy;
+    [SerializeField]
+    private bool _fireDirectionUp;
 
     void Update()
     {
-        if (_isEnemy == false)
+        if (_fireDirectionUp == true)
         {
             transform.Translate(Vector3.up * _speed * Time.deltaTime);
             if (transform.position.y > 8)
@@ -29,11 +31,16 @@ public class Laser : MonoBehaviour
         else
         {
             transform.Translate(Vector3.down * _speed * Time.deltaTime);
-            if (transform.position.y < -5.5f)
+            if (transform.position.y < -6)
             {
-
-                Destroy(this.gameObject);
-
+                if (transform.parent != null)
+                {
+                    Destroy(transform.parent.gameObject);
+                }
+                else
+                {
+                    Destroy(this.gameObject);
+                }
 
             }
         }

@@ -396,6 +396,8 @@ MonoBehaviour:
   _ySpeed: 4
   _enemyLaserPrefab: {fileID: 4630619388445086322, guid: ecd4ec57855226c4fa8d33eeaaa545f9,
     type: 3}
+  _enemyRearLaserPrefab: {fileID: 3043741781388956078, guid: 28f37b7e286a95646bb7dd820b84c97b,
+    type: 3}
   _enemyBlackHolePrefab: {fileID: 0}
   _explosionPrefab: {fileID: 418433537383931242, guid: daa362500550df94b8e0170a4e956f62,
     type: 3}
