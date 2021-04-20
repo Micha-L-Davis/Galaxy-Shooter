@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _leftEngine, _rightEngine;
     [SerializeField]
+    private GameObject _leftCannon, _rightCannon;
+    [SerializeField]
     private GameObject _thrusters;
     [SerializeField]
     private CameraShake _camera;
@@ -253,6 +255,8 @@ public class Player : MonoBehaviour
     public void TripleShotGet()
     {
         _tripleShotActive = true;
+        _leftCannon.SetActive(true);
+        _rightCannon.SetActive(true);
         StartCoroutine(TripleShotPowerDownRoutine());
     }
     public void SpeedBoostGet()
@@ -381,7 +385,9 @@ public class Player : MonoBehaviour
     {
         while (_tripleShotActive == true)
         {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(8f);
+            _leftCannon.SetActive(false);
+            _rightCannon.SetActive(false);
             _tripleShotActive = false;
         }
     }
