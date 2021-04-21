@@ -20,6 +20,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private int _waveCount = 0;
     private List<GameObject> _enemyList = new List<GameObject>();
+    public List<GameObject> _powerUpList = new List<GameObject>();
     private bool _stopSpawning = false;
     UIManager _uIManager;
 
@@ -138,7 +139,8 @@ public class SpawnManager : MonoBehaviour
             {
                 Debug.Log("Low was " + low + " & high was " + high + ". Powerup " + i + " awarded.");
                 float randomX = Random.Range(-9.5f, 9.5f);
-                Instantiate(_powerups[i], new Vector3(randomX, 8, 0), Quaternion.identity);
+                GameObject newPowerup = Instantiate(_powerups[i], new Vector3(randomX, 8, 0), Quaternion.identity);
+                _powerUpList.Add(newPowerup);
             }
         }
     }
@@ -150,24 +152,6 @@ public class SpawnManager : MonoBehaviour
         while (_stopSpawning == false)
         {
             SpawnPowerup();
-
-            //int randomPowerUp = Random.Range(0, 7);
-            //if (randomPowerUp == 5)
-            //{
-            //    Debug.Log("Powerup is " + randomPowerUp + "! Rolling to confirm black hole cannon");
-            //    int randomPowerUp2 = Random.Range(0, 7);
-            //    randomPowerUp = randomPowerUp2;
-            //    Debug.Log("new powerup is " + randomPowerUp);
-            //}
-            //else if (randomPowerUp == 7)
-            //{
-            //    Debug.Log("Powerup is " + randomPowerUp + "! Rolling to confirm slow Negaup");
-            //    int randomPowerUp2 = Random.Range(0, 7);
-            //    randomPowerUp = randomPowerUp2;
-            //    Debug.Log("new powerup is " + randomPowerUp);
-            //}
-            //float randomX = Random.Range(-9.5f, 9.5f);
-            //Instantiate(_powerups[randomPowerUp], new Vector3(randomX, 8, 0), Quaternion.identity);
             yield return new WaitForSeconds(randomT);
         }
 

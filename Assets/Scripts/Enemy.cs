@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Enemy : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class Enemy : MonoBehaviour
     private GameObject _enemyBlackHolePrefab;
     [SerializeField]
     private GameObject _explosionPrefab;
+    [SerializeField]
+    private SpawnManager _spawnManager;
     private float _time;
     private float _amplitude = 200;
     private bool _isDead = false;
@@ -27,11 +30,20 @@ public class Enemy : MonoBehaviour
     private bool _secondMove;
     [SerializeField]
     private bool _canRearFire = false;
-    private float _rearFireCooldown = -1f;
+    private float _fireCooldown = -1f;
+    [SerializeField]
+    private float _detectionRange = 7f;
+    [SerializeField]
+    private float _rammingSpeedMultiplier = 2;
 
 
     private void Start()
     {
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        if (_spawnManager == null)
+        {
+            Debug.LogError("The Spawn Manager is NULL");
+        }
         _player = GameObject.Find("Player").GetComponent<Player>();
         if (_player == null)
         {
@@ -45,12 +57,14 @@ public class Enemy : MonoBehaviour
                 {
                     _canRearFire = true;
                 }
+                StartCoroutine(EnemyLaserFireRoutine());
                 break;
             case 1:
                 if (d10 == 0)
                 {
                     _canRearFire = true;
                 }
+                StartCoroutine(EnemyLaserFireRoutine());
                 break;
             case 2:
                 StartCoroutine(PorterMovementRoutine());
@@ -76,6 +90,13 @@ public class Enemy : MonoBehaviour
     {
         TrackTime();
         MoveMe();
+
+        //excluding enemies that don't have conventional weapons from targeting powerups.
+        if (_enemyID != 2 & _enemyID != 4)
+        {
+            LookForTargets();
+        }
+        
         if (_canRearFire == true)
         {
             RearFire();
@@ -136,13 +157,13 @@ public class Enemy : MonoBehaviour
             case 4: //Rammer
                 float distanceToPlayer = Vector3.Distance(transform.position, _player.transform.position);
                 Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
-                if (distanceToPlayer <= 5)
+                if (distanceToPlayer <= _detectionRange)
                 {
                     Vector2 direction = (Vector2)_player.transform.position - rigidbody.position;
                     direction.Normalize();
                     float rotateAmount = Vector3.Cross(direction, transform.up).z;
                     rigidbody.angularVelocity = -rotateAmount * 500;
-                    rigidbody.velocity = transform.up * _ySpeed;
+                    rigidbody.velocity = transform.up * _ySpeed * _rammingSpeedMultiplier;
                 }
                 else
                 {
@@ -155,15 +176,53 @@ public class Enemy : MonoBehaviour
                 break;
         }
     }
+    private void LookForTargets()
+    {
+        _spawnManager._powerUpList = _spawnManager._powerUpList.Where(e => e != null).ToList();
+        int count = _spawnManager._powerUpList.Count;
+        Debug.Log(count + " targets present.");
+        for (int i = 0; i < count; i++)
+        {
+            GameObject powerup = _spawnManager._powerUpList[i];
+            float directionToTarget = Vector3.SignedAngle(powerup.transform.position - transform.position, transform.up, Vector3.forward);
+            Debug.Log("Target number " + i + " is at " + directionToTarget + " degrees.");
+            if (directionToTarget < -175f | directionToTarget > 175f)
+            {
+                if (_isDead == false && Time.time > _fireCooldown)
+                {
+                    Debug.Log("Target locked: FORE CANNON FIRING!");
+                    Instantiate(_enemyLaserPrefab, transform.position + new Vector3(0, -0.5f, 0), Quaternion.identity);
+                    _fireCooldown = Time.time + 2f;
+                }
+            }
+            if (directionToTarget < 5f & directionToTarget > -5f)
+            {
+                
+                if (_isDead == false && Time.time > _fireCooldown)
+                {
+                    Debug.Log("Target locked: AFT CANNON FIRING!");
+                    Instantiate(_enemyRearLaserPrefab, transform.position + new Vector3(0, 1.2f, 0), Quaternion.identity);
+                    _fireCooldown = Time.time + 2f;
+                }
+            }
+        }
+        //for each powerup in the powerups list
+        //get the Vector3.SignedAngle to powerup.
+        //if powerupAngle <5 && > -5 or <-175 && > 175
+        //shoooooot
+        //cooldown the shoot
+
+    }
     private void RearFire()
     {
         float directionToPlayer = Vector3.SignedAngle(_player.transform.position - transform.position, transform.up, Vector3.forward);
-        if (directionToPlayer < 10 && directionToPlayer > -10)
+        if (directionToPlayer < 10 & directionToPlayer > -10)
         {
-            if (_isDead == false && Time.time > _rearFireCooldown)
+            if (_isDead == false && Time.time > _fireCooldown)
             {
+                Debug.Log("Player Target Locked: AFT CANNON FIRING!");
                 Instantiate(_enemyRearLaserPrefab, transform.position + new Vector3(0, 1.2f, 0), Quaternion.identity);
-                _rearFireCooldown = Time.time + 2f;
+                _fireCooldown = Time.time + 2f;
             }
         }
     }
@@ -196,6 +255,7 @@ public class Enemy : MonoBehaviour
             if (_shieldsUp == true)
             {
                 _shieldsUp = false;
+                Destroy(other.gameObject);
                 Destroy(transform.GetChild(0).gameObject); //top child should be shields
             }
             else

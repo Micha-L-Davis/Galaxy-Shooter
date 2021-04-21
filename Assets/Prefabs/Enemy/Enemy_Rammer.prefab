@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b675a8b014110c14f9f2b11c43c79a86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ySpeed: 4
+  _ySpeed: 6
   _enemyLaserPrefab: {fileID: 0}
   _enemyRearLaserPrefab: {fileID: 0}
   _enemyBlackHolePrefab: {fileID: 0}
