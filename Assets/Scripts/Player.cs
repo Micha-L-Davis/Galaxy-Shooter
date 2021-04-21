@@ -127,6 +127,21 @@ public class Player : MonoBehaviour
             
         }
 
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            
+
+            for (int i = 0; i < _spawnManager._powerUpList.Count; i++)
+            {
+                GameObject powerup = _spawnManager._powerUpList[i];
+                float range = Vector2.Distance(transform.position, powerup.transform.position);
+                Vector3 bearing = transform.position - powerup.transform.position;
+                powerup.GetComponent<Powerup>().TractorBeam(range, bearing);
+            }
+        }
+        //if c is pressed down
+        //for each powerup on the list
+        //powerup.tractorbeam()
     }
     void CalculateMovement()
     {

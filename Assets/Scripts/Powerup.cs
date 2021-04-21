@@ -10,6 +10,8 @@ public class Powerup : MonoBehaviour
     [SerializeField]
     private int _powerupID;
     private AudioSource _audio;
+    private bool _tractored;
+    private Vector3 _tractorBearing = Vector3.zero;
 
     private void Start()
     {
@@ -22,13 +24,34 @@ public class Powerup : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        if (_tractored == true)
+        {
+            transform.Translate(_tractorBearing * _speed * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        }
+        
         if (transform.position.y < -5.4f)
         {
             Destroy(this.gameObject);
         }
     }
-
+    public void TractorBeam(float range, Vector3 bearing)
+    {
+        if (range <= 5f)
+        {
+            _tractored = true;
+            _tractorBearing = bearing;
+        }
+        else
+        {
+            Debug.Log(this.gameObject.name + " is out of tractor range.");
+        }
+        //if range is less than 5
+        //move toward bearing at speed * 2
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")

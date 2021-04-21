@@ -180,17 +180,14 @@ public class Enemy : MonoBehaviour
     {
         _spawnManager._powerUpList = _spawnManager._powerUpList.Where(e => e != null).ToList();
         int count = _spawnManager._powerUpList.Count;
-        Debug.Log(count + " targets present.");
         for (int i = 0; i < count; i++)
         {
             GameObject powerup = _spawnManager._powerUpList[i];
             float directionToTarget = Vector3.SignedAngle(powerup.transform.position - transform.position, transform.up, Vector3.forward);
-            Debug.Log("Target number " + i + " is at " + directionToTarget + " degrees.");
             if (directionToTarget < -175f | directionToTarget > 175f)
             {
                 if (_isDead == false && Time.time > _fireCooldown)
                 {
-                    Debug.Log("Target locked: FORE CANNON FIRING!");
                     Instantiate(_enemyLaserPrefab, transform.position + new Vector3(0, -0.5f, 0), Quaternion.identity);
                     _fireCooldown = Time.time + 2f;
                 }
@@ -200,7 +197,6 @@ public class Enemy : MonoBehaviour
                 
                 if (_isDead == false && Time.time > _fireCooldown)
                 {
-                    Debug.Log("Target locked: AFT CANNON FIRING!");
                     Instantiate(_enemyRearLaserPrefab, transform.position + new Vector3(0, 1.2f, 0), Quaternion.identity);
                     _fireCooldown = Time.time + 2f;
                 }
