@@ -3954,6 +3954,7 @@ MonoBehaviour:
   - {fileID: 346773218581310439, guid: d962663e62a9fe94e8f20a85f0f936a2, type: 3}
   - {fileID: 7740149300789555877, guid: a0691c1526f23f74b8532a9b05919119, type: 3}
   _waveCount: 0
+  _powerUpList: []
 --- !u!4 &1840658234
 Transform:
   m_ObjectHideFlags: 0
