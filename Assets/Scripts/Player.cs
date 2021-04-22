@@ -73,6 +73,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private bool _blackHoleCannonActive = false;
     private bool _SlowNegaActive = false;
+    [SerializeField]
+    private bool _eMPActive = false;
 
     void Start()
     {
@@ -178,6 +180,13 @@ public class Player : MonoBehaviour
             else if (_blackHoleCannonActive == true)
             {
                 Instantiate(_blackHolePrefab, transform.position + new Vector3(0, 1.5f, 0), Quaternion.identity);
+            }
+            else if (_eMPActive == true)
+            {
+                //instantiate EMP prefab
+                    //in EMP script:
+                    //scale prefab up until it reaches max size.
+                    //destroy prefab
             }
             else
             {

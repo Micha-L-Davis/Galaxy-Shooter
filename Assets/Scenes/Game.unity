@@ -1571,7 +1571,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -100, y: -80}
+  m_AnchoredPosition: {x: -100, y: -95}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &725135409
@@ -3904,7 +3904,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -100.00001, y: -49.999996}
+  m_AnchoredPosition: {x: -100, y: -64.999985}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1840658232
@@ -3946,7 +3946,7 @@ MonoBehaviour:
   - {fileID: 2199609823644208750, guid: aa8b7b1d577604148be707ad9c274f7c, type: 3}
   - {fileID: 6189603552133681084, guid: dafdbddef3b657d4698bf932ba4afef6, type: 3}
   - {fileID: 7529443158230138474, guid: 43dbbfc6fa83df9498a1a1c14e6f9af8, type: 3}
-  _powerUpSpawnProb: 1e000000190000000f0000000a0000000a0000000500000005000000
+  _powerUpSpawnProb: 19000000190000000a000000140000000a0000000500000005000000
   _enemies:
   - {fileID: 4003783252727456141, guid: be818bb45ac4e0e4da4b17c1e37d1419, type: 3}
   - {fileID: 2118317003554890722, guid: 54668583d9bfc2a4b83c3486e274a557, type: 3}
