@@ -69,7 +69,7 @@ public class Enemy : MonoBehaviour
             case 2:
                 //enable emergency teleport capability
                 _emergencyTeleportCooldown = Random.Range(1.5f, 3f);
-                //StartCoroutine(PorterMovementRoutine());
+                StartCoroutine(PorterMovementRoutine());
                 break;
             case 3:
                 if (d10 == 0)
