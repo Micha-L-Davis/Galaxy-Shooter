@@ -1,7 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
@@ -35,7 +34,8 @@ public class Enemy : MonoBehaviour
     private float _detectionRange = 7f;
     [SerializeField]
     private float _rammingSpeedMultiplier = 2;
-
+    private float _emergencyTeleportCooldown = -1;
+    private bool _canEmergencyTeleport = false;
 
     private void Start()
     {
@@ -67,7 +67,9 @@ public class Enemy : MonoBehaviour
                 StartCoroutine(EnemyLaserFireRoutine());
                 break;
             case 2:
-                StartCoroutine(PorterMovementRoutine());
+                //enable emergency teleport capability
+                _emergencyTeleportCooldown = Random.Range(1.5f, 3f);
+                //StartCoroutine(PorterMovementRoutine());
                 break;
             case 3:
                 if (d10 == 0)
@@ -140,9 +142,9 @@ public class Enemy : MonoBehaviour
                 transform.Translate(new Vector2(xSpeed, -_ySpeed * Time.deltaTime));
                 break;
             case 2: //Porter
-                    //porter movement can't be run on update. 
+                transform.Rotate(Vector3.forward * 12f * Time.deltaTime);
+                    //teleportation movement can't be run on update. 
                     //This note is here to remind you not to put the movement coroutine here. 
-                    //It has to be in Start with an "if id = 2"
                 break;
             case 3: //Shielder
                 if (_initialMove == true)
@@ -230,6 +232,7 @@ public class Enemy : MonoBehaviour
         {
             if (_shieldsUp == true)
             {
+
                 _shieldsUp = false;
                 Destroy(transform.GetChild(0).gameObject); //top child should be shields
             }
@@ -248,6 +251,13 @@ public class Enemy : MonoBehaviour
         }
         else if (other.tag == "Laser")
         {
+            if (_emergencyTeleportCooldown != -1f && Time.time > _emergencyTeleportCooldown)
+            {
+                _emergencyTeleportCooldown = Random.Range(1.5f, 3f);
+                StartCoroutine(EmergencyTeleportRoutine());
+                _emergencyTeleportCooldown += Time.time;
+                return;
+            }
             if (_shieldsUp == true)
             {
                 _shieldsUp = false;
@@ -271,6 +281,7 @@ public class Enemy : MonoBehaviour
            
         }
     }
+
     IEnumerator EnemyLaserFireRoutine()
     {
         float randomTime = Random.Range(3, 7);
@@ -307,14 +318,26 @@ public class Enemy : MonoBehaviour
 
 
     }
+    IEnumerator EmergencyTeleportRoutine()
+    {
+
+        float randomX = Random.Range(-9.75f, 9.75f);
+        float randomY = Random.Range(1f, 7f);
+        float cooldown = Random.Range(1f, 2f);
+
+        gameObject.GetComponent<ScaleUpScaleDown>().ScaleMe(false, true);
+        yield return new WaitForSeconds(1f);
+        transform.position = new Vector3(randomX, randomY, 0);
+        gameObject.GetComponent<ScaleUpScaleDown>().ScaleMe(true, false);
+        yield return new WaitForSeconds(1f);
+
+    }
     IEnumerator ShielderMovementRoutine()
     {
         while (_isDead == false)
         {
             int randomV1 = Random.Range(0, 8);
-            Debug.Log("randomV1 = " + randomV1);
             int randomV2 = Random.Range(0, 2);
-            Debug.Log("randomV2 = " + randomV2);
             
             switch (randomV1)
             {
@@ -415,7 +438,7 @@ public class Enemy : MonoBehaviour
             _secondMove = true;
             yield return new WaitForSeconds(.5f);
             _secondMove = false;
-            yield return new WaitForSeconds(.25f);
+            yield return new WaitForSeconds(1.5f);
 
         }
     }
