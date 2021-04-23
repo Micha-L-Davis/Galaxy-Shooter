@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _blackHolePrefab;
     [SerializeField]
+    private GameObject _eMPBurstPrefab;
+    [SerializeField]
     private SpriteRenderer _shieldSprite;
     [SerializeField]
     private GameObject _leftEngine, _rightEngine;
@@ -184,9 +186,8 @@ public class Player : MonoBehaviour
             else if (_eMPActive == true)
             {
                 //instantiate EMP prefab
-                    //in EMP script:
-                    //scale prefab up until it reaches max size.
-                    //destroy prefab
+                Instantiate(_eMPBurstPrefab, transform.position, Quaternion.identity);
+                _eMPActive = false;
             }
             else
             {
@@ -337,6 +338,10 @@ public class Player : MonoBehaviour
         StartCoroutine(SlowNegaPowerDownRoutine());
     }
 
+    public void EMPGet()
+    {
+        _eMPActive = true;
+    }
     public void AfterburnersOn()
     {
         _isBoosting = true;

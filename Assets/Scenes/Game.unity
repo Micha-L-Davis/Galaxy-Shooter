@@ -3339,6 +3339,8 @@ MonoBehaviour:
     type: 3}
   _blackHolePrefab: {fileID: 3707608683766051727, guid: 6c3d91e55797ea4439288c634644c37f,
     type: 3}
+  _eMPBurstPrefab: {fileID: 3032019690739326182, guid: 3548e12698a0d0f4b99042c088ed7743,
+    type: 3}
   _shieldSprite: {fileID: 1125533052}
   _leftEngine: {fileID: 1614185033}
   _rightEngine: {fileID: 350778052}
@@ -3361,6 +3363,7 @@ MonoBehaviour:
   _speedBoostActive: 0
   _shieldsActive: 0
   _blackHoleCannonActive: 0
+  _eMPActive: 0
 --- !u!82 &1758359731
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3946,7 +3949,8 @@ MonoBehaviour:
   - {fileID: 2199609823644208750, guid: aa8b7b1d577604148be707ad9c274f7c, type: 3}
   - {fileID: 6189603552133681084, guid: dafdbddef3b657d4698bf932ba4afef6, type: 3}
   - {fileID: 7529443158230138474, guid: 43dbbfc6fa83df9498a1a1c14e6f9af8, type: 3}
-  _powerUpSpawnProb: 19000000190000000a000000140000000a0000000500000005000000
+  - {fileID: 3887208769801258167, guid: 63f10ed4114e22e48af5c807ddb02bba, type: 3}
+  _powerUpSpawnProb: 19000000190000000a0000000f0000000a000000050000000500000005000000
   _enemies:
   - {fileID: 4003783252727456141, guid: be818bb45ac4e0e4da4b17c1e37d1419, type: 3}
   - {fileID: 2118317003554890722, guid: 54668583d9bfc2a4b83c3486e274a557, type: 3}
