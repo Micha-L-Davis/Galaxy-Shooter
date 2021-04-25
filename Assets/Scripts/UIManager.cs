@@ -10,7 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _scoreText;
     [SerializeField]
-    private Text _ammoText;
+    public Text _ammoText;
     [SerializeField]
     private Image _livesImg;
     [SerializeField]

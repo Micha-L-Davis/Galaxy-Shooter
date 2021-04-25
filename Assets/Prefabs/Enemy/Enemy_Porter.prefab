@@ -289,7 +289,7 @@ GameObject:
   - component: {fileID: 5841953637683866532}
   m_Layer: 0
   m_Name: Enemy_Porter
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -328,8 +328,11 @@ MonoBehaviour:
     type: 3}
   _explosionPrefab: {fileID: 418433537383931242, guid: daa362500550df94b8e0170a4e956f62,
     type: 3}
+  _spawnManager: {fileID: 0}
   _enemyID: 2
   _canRearFire: 0
+  _detectionRange: 7
+  _rammingSpeedMultiplier: 2
 --- !u!50 &4395633408597127375
 Rigidbody2D:
   serializedVersion: 4

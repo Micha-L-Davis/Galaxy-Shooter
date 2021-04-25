@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 346773218581310438}
   m_Layer: 0
   m_Name: Enemy_Rammer
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,14 +46,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b675a8b014110c14f9f2b11c43c79a86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ySpeed: 6
+  _ySpeed: 4
   _enemyLaserPrefab: {fileID: 0}
   _enemyRearLaserPrefab: {fileID: 0}
   _enemyBlackHolePrefab: {fileID: 0}
   _explosionPrefab: {fileID: 418433537383931242, guid: daa362500550df94b8e0170a4e956f62,
     type: 3}
+  _spawnManager: {fileID: 0}
   _enemyID: 4
   _canRearFire: 0
+  _detectionRange: 7
+  _rammingSpeedMultiplier: 2
 --- !u!50 &346773218581310437
 Rigidbody2D:
   serializedVersion: 4

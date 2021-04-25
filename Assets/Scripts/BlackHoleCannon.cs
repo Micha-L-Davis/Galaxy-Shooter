@@ -7,7 +7,7 @@ public class BlackHoleCannon : MonoBehaviour
     public GameObject _target;
     private Rigidbody2D _rigidbody;
     [SerializeField]
-    private float _speed = 8f;
+    private float _speed = 6f;
     [SerializeField]
     private float _rotationSpeed = 200f;
     [SerializeField]
@@ -48,14 +48,15 @@ public class BlackHoleCannon : MonoBehaviour
             transform.position = new Vector3(11.3f, transform.position.y, 0);
         }
 
-        if (transform.position.y > 8)
-        {
-            transform.position = new Vector3(transform.position.x, -5.4f, 0);
-        }
-        else if (transform.position.y < -5.4f)
-        {
-            transform.position = new Vector3(transform.position.x, 8, 0);
-        }
+        //this is probably making the game too hard :-/
+        //if (transform.position.y > 8)
+        //{
+        //    transform.position = new Vector3(transform.position.x, -5.4f, 0);
+        //}
+        //else if (transform.position.y < -5.4f)
+        //{
+        //    transform.position = new Vector3(transform.position.x, 8, 0);
+        //}
 
         if (_target == null)
         {

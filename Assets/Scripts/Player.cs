@@ -169,7 +169,16 @@ public class Player : MonoBehaviour
     }
     void FireLaser()
     {
-        if (_ammoCount > 0)
+        if (_eMPActive == true)
+        {
+            Instantiate(_eMPBurstPrefab, transform.position, Quaternion.identity);
+            _eMPActive = false;
+        }
+        else if (_blackHoleCannonActive == true)
+        {
+            Instantiate(_blackHolePrefab, transform.position + new Vector3(0, 1.5f, 0), Quaternion.identity);
+        }
+        else if (_ammoCount > 0)
         {
             _canFire = Time.time + _fireRate;
 
@@ -178,16 +187,6 @@ public class Player : MonoBehaviour
                 Instantiate(_tripleShotPrefab, transform.position + new Vector3(0.05f, 1.39f, 0), Quaternion.identity);
                 _ammoCount -= 3;
                 if (_ammoCount < 0) { _ammoCount = 0; }
-            }
-            else if (_blackHoleCannonActive == true)
-            {
-                Instantiate(_blackHolePrefab, transform.position + new Vector3(0, 1.5f, 0), Quaternion.identity);
-            }
-            else if (_eMPActive == true)
-            {
-                //instantiate EMP prefab
-                Instantiate(_eMPBurstPrefab, transform.position, Quaternion.identity);
-                _eMPActive = false;
             }
             else
             {

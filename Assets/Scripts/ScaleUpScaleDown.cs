@@ -15,7 +15,6 @@ public class ScaleUpScaleDown : MonoBehaviour
         if (_isScalingDown == true && _isScalingUp == false)
         {
             transform.localScale = Vector3.Lerp(transform.localScale, scaleDown, 50f * Time.deltaTime);
-            Debug.Log("X Scale is " + transform.localScale.x);
             if (transform.localScale.x <= 0)
             {
                 _isScalingDown = false;
@@ -25,7 +24,6 @@ public class ScaleUpScaleDown : MonoBehaviour
         else if (_isScalingDown == false && _isScalingUp == true)
         {                
             transform.localScale = Vector3.Lerp(transform.localScale, scaleUp, 50f * Time.deltaTime);
-            Debug.Log("X Scale is " + transform.localScale.x);
             if (transform.localScale.x >= 1)
             {
                 _isScalingUp = false;

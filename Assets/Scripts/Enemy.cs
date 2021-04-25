@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _detectionRange = 7f;
     [SerializeField]
-    private float _rammingSpeedMultiplier = 2;
+    private float _rammingSpeedMultiplier = 1.25f;
     private float _emergencyTeleportCooldown = -1;
     private bool _canEmergencyTeleport = false;
 
@@ -67,8 +67,7 @@ public class Enemy : MonoBehaviour
                 StartCoroutine(EnemyLaserFireRoutine());
                 break;
             case 2:
-                //enable emergency teleport capability
-                _emergencyTeleportCooldown = Random.Range(1.5f, 3f);
+                _emergencyTeleportCooldown = 3;
                 StartCoroutine(PorterMovementRoutine());
                 break;
             case 3:
@@ -90,7 +89,7 @@ public class Enemy : MonoBehaviour
     }
     void Update()
     {
-        TrackTime();
+        _time++;
         MoveMe();
 
         //excluding enemies that don't have conventional weapons from targeting powerups.
@@ -124,11 +123,6 @@ public class Enemy : MonoBehaviour
         
     }
 
-    private void TrackTime()
-    {
-        _time++;
-    }
-
     private void MoveMe()
     {
         switch (_enemyID)
@@ -142,8 +136,7 @@ public class Enemy : MonoBehaviour
                 transform.Translate(new Vector2(xSpeed, -_ySpeed * Time.deltaTime));
                 break;
             case 2: //Porter
-                transform.Rotate(Vector3.forward * 12f * Time.deltaTime);
-                    //teleportation movement can't be run on update. 
+                transform.Rotate(Vector3.forward * 12f * Time.deltaTime); //why doesn't this continually spin?
                     //This note is here to remind you not to put the movement coroutine here. 
                 break;
             case 3: //Shielder
@@ -204,12 +197,6 @@ public class Enemy : MonoBehaviour
                 }
             }
         }
-        //for each powerup in the powerups list
-        //get the Vector3.SignedAngle to powerup.
-        //if powerupAngle <5 && > -5 or <-175 && > 175
-        //shoooooot
-        //cooldown the shoot
-
     }
     private void RearFire()
     {
@@ -253,7 +240,6 @@ public class Enemy : MonoBehaviour
         {
             if (_emergencyTeleportCooldown != -1f && Time.time > _emergencyTeleportCooldown)
             {
-                _emergencyTeleportCooldown = Random.Range(1.5f, 3f);
                 StartCoroutine(EmergencyTeleportRoutine());
                 _emergencyTeleportCooldown += Time.time;
                 return;
@@ -301,7 +287,6 @@ public class Enemy : MonoBehaviour
         {
             float randomX = Random.Range(-9.75f, 9.75f);
             float randomY = Random.Range(1f, 7f);
-            float cooldown = Random.Range(1f, 2f);
 
             gameObject.GetComponent<ScaleUpScaleDown>().ScaleMe(false, true);
             yield return new WaitForSeconds(1f);
@@ -313,7 +298,7 @@ public class Enemy : MonoBehaviour
             {
                 Instantiate(_enemyBlackHolePrefab, transform.position, Quaternion.identity);
             }
-            yield return new WaitForSeconds(cooldown);
+            yield return new WaitForSeconds(1f);
         }
 
 
@@ -323,14 +308,12 @@ public class Enemy : MonoBehaviour
 
         float randomX = Random.Range(-9.75f, 9.75f);
         float randomY = Random.Range(1f, 7f);
-        float cooldown = Random.Range(1f, 2f);
 
         gameObject.GetComponent<ScaleUpScaleDown>().ScaleMe(false, true);
         yield return new WaitForSeconds(1f);
         transform.position = new Vector3(randomX, randomY, 0);
         gameObject.GetComponent<ScaleUpScaleDown>().ScaleMe(true, false);
         yield return new WaitForSeconds(1f);
-
     }
     IEnumerator ShielderMovementRoutine()
     {
