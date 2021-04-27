@@ -43,13 +43,20 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator StartWaveSpawnerRoutine()
     {
+        if (_waveCount == 0)
+        {
+            yield return _uIManager.WaveIncomingTextRoutine(_waveCount + 1);
+        }
+
         yield return new WaitForSeconds(3.5f);
         while (_stopSpawningEnemies == false)
         {
             yield return SpawnWaveRoutine();
             yield return new WaitWhile(EnemyisAlive);
-            yield return new WaitForSeconds(_waitTime);
+            yield return _uIManager.WaveIncomingTextRoutine(_waveCount + 1);
+
         }
+ 
     }
 
     private bool EnemyisAlive()
@@ -211,14 +218,5 @@ public class SpawnManager : MonoBehaviour
         _stopSpawningEnemies = true;
         _stopSpawningPowerups = true;
     }
- 
-    //IEnumerator EndOfWaveRoutine()
-    //{
-    //    _uIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-    //    if (_uIManager != null)
-    //    {
-    //        _uIManager.WaveIncomingTextRoutine(_waveCount);
-    //    }
-    //    yield return new WaitForSeconds(4);
-    //}
 }
+ 

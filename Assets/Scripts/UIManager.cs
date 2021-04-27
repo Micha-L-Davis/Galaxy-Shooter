@@ -17,11 +17,12 @@ public class UIManager : MonoBehaviour
     private Sprite[] _liveSprites;
     [SerializeField]
     private GameObject _gameOverText;
-//    [SerializeField]
-//    private GameObject _waveIncomingText;
+    [SerializeField]
+    private GameObject _waveIncomingText;
     [SerializeField]
     private GameObject _restartPrompt;
     private GameManager _gameManager;
+    private bool _gameIsOver = false;
     
 
     void Start()
@@ -30,7 +31,7 @@ public class UIManager : MonoBehaviour
         _ammoText.text = "Ammo: " + 15 + "/15";
         _gameOverText.SetActive(false);
         _restartPrompt.SetActive(false);
-        //_waveIncomingText.SetActive(false);
+        _waveIncomingText.SetActive(false);
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
     }
 
@@ -47,26 +48,25 @@ public class UIManager : MonoBehaviour
         _livesImg.sprite = _liveSprites[currentLives];
         if(currentLives == 0)
         {
+            _gameIsOver = true;
             _restartPrompt.SetActive(true);
             _gameManager.GameIsOver();
             StartCoroutine(GameOverTextRoutine());
         }
     }
 
-//    public IEnumerator WaveIncomingTextRoutine(int waveNumber)
-//    {
-//        while (true)
-//        {
-//            Text text = _waveIncomingText.GetComponent<Text>();
-//            text.text = "WAVE " + waveNumber + " INCOMING!";
-//            _waveIncomingText.SetActive(true);
-//            yield return new WaitForSeconds(3f);
-//            _waveIncomingText.SetActive(false);
-//        }
-//        
-//
-  //  }
+    public IEnumerator WaveIncomingTextRoutine(int waveNumber)
+    {
+        if (_gameIsOver == false)
+        {
+            Text text = _waveIncomingText.GetComponent<Text>();
+            text.text = "WAVE " + waveNumber + " INCOMING!";
+            _waveIncomingText.SetActive(true);
+            yield return new WaitForSeconds(3f);
+            _waveIncomingText.SetActive(false);
 
+        }
+    }
     IEnumerator GameOverTextRoutine()
     {
         while (true)
