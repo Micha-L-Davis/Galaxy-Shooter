@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BlackHoleCannon : MonoBehaviour
 {
-    public GameObject _target;
+    public GameObject target;
     private Rigidbody2D _rigidbody;
     [SerializeField]
     private float _speed = 6f;
@@ -17,15 +17,15 @@ public class BlackHoleCannon : MonoBehaviour
     {
         if (_isEnemy == true)
         {
-            _target = GameObject.Find("Player");
+            target = GameObject.Find("Player");
         }
         else
         {
-            _target = GameObject.FindGameObjectWithTag("Enemy");
+            target = GameObject.FindGameObjectWithTag("Enemy");
         }
         
 
-        if (_target == null)
+        if (target == null)
         {
             Destroy(this.gameObject);
         }
@@ -58,9 +58,9 @@ public class BlackHoleCannon : MonoBehaviour
         //    transform.position = new Vector3(transform.position.x, 8, 0);
         //}
 
-        if (_target == null)
+        if (target == null)
         {
-            _target = GameObject.FindGameObjectWithTag("Enemy");
+            target = GameObject.FindGameObjectWithTag("Enemy");
         }
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -77,9 +77,9 @@ public class BlackHoleCannon : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (_target != null)
+        if (target != null)
         {
-            Vector2 direction = (Vector2)_target.transform.position - _rigidbody.position;
+            Vector2 direction = (Vector2)target.transform.position - _rigidbody.position;
             direction.Normalize();
             float rotateAmount = Vector3.Cross(direction, transform.up).z;
             _rigidbody.angularVelocity = -rotateAmount * _rotationSpeed;

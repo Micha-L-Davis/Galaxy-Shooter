@@ -43,22 +43,16 @@ public class BossSegmentDamage : MonoBehaviour
             case 0:
                 _shieldInstance.transform.localScale = new Vector2(1.27f, 1.28f);
                 _shieldInstance.transform.position = transform.position + new Vector3(0, .63f, 0);
-                //shield transform scale 1.27, 1.28
-                //shield position 0, .63, 0
                 break;
             case 1:
                 _shieldInstance.transform.position = transform.position + new Vector3(-3, -.3f, 0);
-                //shield position 3, -.3, 0
                 break;
             case 2:
                 _shieldInstance.transform.position = transform.position + new Vector3(3, -.3f, 0);
-                //shield position 3, -.3, 0 
                 break;
             case 3:
                 _shieldInstance.transform.localScale = new Vector2(.75f, .97f);
                 _shieldInstance.transform.position = transform.position + new Vector3(-4.82f, -.25f, 0);
-                //shield transform scale .75, .97
-                //shield position 4.82, -.25, 0
                 break;
             case 4:
                 _shieldInstance.transform.localScale = new Vector2(.75f, .97f);

@@ -11,12 +11,9 @@ public class BoostBar : MonoBehaviour
     void Start()
     {
         Player player = GameObject.Find("Player").GetComponent<Player>();
-        //get the boost fuel max from player
         _boostBar = GetComponent<Slider>();
-        _boostBar.maxValue = player._boostMax;
-        _boostBar.value = player._boostMax;
-        //set boostBar.maxValue to max boost
-        //set boostBar.value max boost
+        _boostBar.maxValue = player.boostMax;
+        _boostBar.value = player.boostMax;
     }
 
     public void UpdateBoostBar(float currentBoostFuel)

@@ -136,7 +136,7 @@ public class Enemy : MonoBehaviour
                 transform.Translate(new Vector2(xSpeed, -_ySpeed * Time.deltaTime));
                 break;
             case 2: //Porter
-                transform.Rotate(Vector3.forward * 12f * Time.deltaTime); //why doesn't this continually spin?
+                transform.Rotate(Vector3.forward * 12f * Time.deltaTime);
                     //This note is here to remind you not to put the movement coroutine here. 
                 break;
             case 3: //Shielder
@@ -173,11 +173,11 @@ public class Enemy : MonoBehaviour
     }
     private void LookForTargets()
     {
-        _spawnManager._powerUpList = _spawnManager._powerUpList.Where(e => e != null).ToList();
-        int count = _spawnManager._powerUpList.Count;
+        _spawnManager.powerUpList = _spawnManager.powerUpList.Where(e => e != null).ToList();
+        int count = _spawnManager.powerUpList.Count;
         for (int i = 0; i < count; i++)
         {
-            GameObject powerup = _spawnManager._powerUpList[i];
+            GameObject powerup = _spawnManager.powerUpList[i];
             float directionToTarget = Vector3.SignedAngle(powerup.transform.position - transform.position, transform.up, Vector3.forward);
             if (directionToTarget < -175f | directionToTarget > 175f)
             {
@@ -205,7 +205,6 @@ public class Enemy : MonoBehaviour
         {
             if (_isDead == false && Time.time > _fireCooldown)
             {
-                Debug.Log("Player Target Locked: AFT CANNON FIRING!");
                 Instantiate(_enemyRearLaserPrefab, transform.position + new Vector3(0, 1.2f, 0), Quaternion.identity);
                 _fireCooldown = Time.time + 2f;
             }

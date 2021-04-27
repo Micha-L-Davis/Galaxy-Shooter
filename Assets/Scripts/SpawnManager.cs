@@ -20,7 +20,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private int _waveCount = 0;
     private List<GameObject> _enemyList = new List<GameObject>();
-    public List<GameObject> _powerUpList = new List<GameObject>();
+    public List<GameObject> powerUpList = new List<GameObject>();
     private bool _stopSpawningEnemies = false;
     private bool _stopSpawningPowerups = false;
     UIManager _uIManager;
@@ -159,7 +159,6 @@ public class SpawnManager : MonoBehaviour
                 high += _enemySpawnProb[i];
                 if (randomEnemy >= low && randomEnemy < high)
                 {
-                    Debug.Log("Low was " + low + " & high was " + high + ". Enemy " + i + " spawned.");
                     float randomX = Random.Range(-9.5f, 9.5f);
                     GameObject newEnemy = Instantiate(_enemies[i], new Vector3(randomX, 8, 0), Quaternion.identity);
                     newEnemy.transform.parent = GameObject.Find("Enemy_Container").transform;
@@ -172,16 +171,15 @@ public class SpawnManager : MonoBehaviour
 
     private void SpawnPowerup()
     {
-        if (_uIManager._ammoText.text == "Ammo: 0/15")
+        if (_uIManager.ammoText.text == "Ammo: 0/15")
         {
             float randomX = Random.Range(-9.5f, 9.5f);
             GameObject newPowerup = Instantiate(_powerups[0], new Vector3(randomX, 8, 0), Quaternion.identity);
-            _powerUpList.Add(newPowerup);
+            powerUpList.Add(newPowerup);
         }
         else
         {
             int randomPowerUp = Random.Range(1, 101);
-            Debug.Log("Rolling for Powerup. Rolled a " + randomPowerUp);
             int low;
             int high = 0;
             for (int i = 0; i < _powerups.Length; i++)
@@ -190,10 +188,9 @@ public class SpawnManager : MonoBehaviour
                 high += _powerUpSpawnProb[i];
                 if (randomPowerUp >= low && randomPowerUp < high)
                 {
-                    Debug.Log("Low was " + low + " & high was " + high + ". Powerup " + i + " awarded.");
                     float randomX = Random.Range(-9.5f, 9.5f);
                     GameObject newPowerup = Instantiate(_powerups[i], new Vector3(randomX, 8, 0), Quaternion.identity);
-                    _powerUpList.Add(newPowerup);
+                    powerUpList.Add(newPowerup);
                 }
             }
         }

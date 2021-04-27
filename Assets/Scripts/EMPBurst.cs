@@ -12,8 +12,7 @@ public class EMPBurst : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        //scale prefab up until it reaches max size.
-        //destroy prefab
+
     }
     private void OnTriggerEnter2D(Collider2D other)
     {

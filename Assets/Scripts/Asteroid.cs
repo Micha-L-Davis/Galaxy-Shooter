@@ -30,7 +30,4 @@ public class Asteroid : MonoBehaviour
             Destroy(this.gameObject, 0.25f);
         }
     }
-    //check for laser collision
-    //instantiate explosion at us
-    //destroy the explosion after 3 sec
 }

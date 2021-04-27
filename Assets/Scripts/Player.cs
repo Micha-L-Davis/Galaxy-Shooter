@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _boostFuel = 100;
     [SerializeField]
-    public float _boostMax = 100;
+    public float boostMax = 100;
     [SerializeField]
     private float _fireRate = 0.15f;
     [SerializeField]
@@ -135,9 +135,9 @@ public class Player : MonoBehaviour
         {
             
 
-            for (int i = 0; i < _spawnManager._powerUpList.Count; i++)
+            for (int i = 0; i < _spawnManager.powerUpList.Count; i++)
             {
-                GameObject powerup = _spawnManager._powerUpList[i];
+                GameObject powerup = _spawnManager.powerUpList[i];
                 float range = Vector2.Distance(transform.position, powerup.transform.position);
                 Vector3 bearing = transform.position - powerup.transform.position;
                 powerup.GetComponent<Powerup>().TractorBeam(range, bearing);
@@ -197,11 +197,7 @@ public class Player : MonoBehaviour
             _audio.clip = _laserSfx;
             _audio.Play();
         }
-        else
-        {
-            //notify the player there is no ammo.
-            Debug.Log("Out of Ammunition!");
-        }
+
 
         UIManager uimanager = _uIManager.transform.GetComponent<UIManager>();
         if (uimanager != null)
@@ -390,7 +386,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(_boostCooldown);
         while (_isBoosting == false)
         {
-            if (_boostFuel < _boostMax)
+            if (_boostFuel < boostMax)
             {
                 _boostFuel += _boostRechargeRate;
                 yield return new WaitForSeconds(0.02f);

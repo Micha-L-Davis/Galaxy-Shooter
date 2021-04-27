@@ -26,8 +26,8 @@ public class BigBadBoss : MonoBehaviour
     private Vector3 _secondVector = Vector3.zero;
     private bool _initialMove;
     private bool _secondMove;
-    public int _stageOneProgress = 0;
-    public int _stageTwoProgress = 0;
+    public int stageOneProgress = 0;
+    public int stageTwoProgress = 0;
     private Player _player;
     Vector3 _moveDirection = Vector3.left;
 
@@ -113,16 +113,16 @@ public class BigBadBoss : MonoBehaviour
         StopCoroutine(FireRoutine(10));
         if (bodyID == 3 || bodyID == 4)
         {
-            _stageOneProgress++;
+            stageOneProgress++;
         }
         else if (bodyID == 1 || bodyID == 2)
         {
-            _stageTwoProgress++;
+            stageTwoProgress++;
         }
-        if (_stageOneProgress == 2)
+        if (stageOneProgress == 2)
         {
             _stage = 2;
-            _stageOneProgress = 0;
+            stageOneProgress = 0;
             Instantiate(_explosionPrefab, _stageOneBodyLeft.transform.position + new Vector3(-4, 0, 0), Quaternion.identity);
             Destroy(_stageOneBodyLeft.gameObject, 1);
             Instantiate(_explosionPrefab, _stageOneBodyRight.transform.position + new Vector3(4, 0, 0), Quaternion.identity);
@@ -130,11 +130,11 @@ public class BigBadBoss : MonoBehaviour
             BossChoreography();
             return;
         }
-        if (_stageTwoProgress == 2)
+        if (stageTwoProgress == 2)
         {
             _stage = 3;
             Debug.Log("Entering stage three, cleaning up damaged components");
-            _stageTwoProgress = 0;
+            stageTwoProgress = 0;
             Instantiate(_explosionPrefab, _stageTwoBodyLeft.transform.position + new Vector3(-3, 0, 0), Quaternion.identity);
             Destroy(_stageTwoBodyLeft.gameObject, 1);
             Instantiate(_explosionPrefab, _stageTwoBodyRight.transform.position + new Vector3(3, 0, 0), Quaternion.identity);

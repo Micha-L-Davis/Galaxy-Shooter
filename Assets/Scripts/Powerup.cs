@@ -45,12 +45,6 @@ public class Powerup : MonoBehaviour
             _tractored = true;
             _tractorBearing = bearing;
         }
-        else
-        {
-            Debug.Log(this.gameObject.name + " is out of tractor range.");
-        }
-        //if range is less than 5
-        //move toward bearing at speed * 2
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
