@@ -20,7 +20,7 @@ public class CameraShake : MonoBehaviour
                 (
                     _startRotation.x + Random.Range(-_intensity, _intensity) * _wiggle, 
                     _startRotation.y + Random.Range(-_intensity, _intensity) * _wiggle, 
-                    _startRotation.x + Random.Range(-_intensity, _intensity) * _wiggle, 
+                    _startRotation.z + Random.Range(-_intensity, _intensity) * _wiggle, 
                     _startRotation.w + Random.Range(-_intensity, _intensity) * _wiggle
                 );
             _intensity -= _settle_rate;
