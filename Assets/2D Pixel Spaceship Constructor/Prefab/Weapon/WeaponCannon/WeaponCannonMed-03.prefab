@@ -47,6 +47,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -58,6 +59,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -137,11 +139,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7095276924438032093, guid: 767df166c0ebc07419e8560188790640,
-        type: 3}
-      propertyPath: m_Name
-      value: WeaponCannonMed-03
-      objectReference: {fileID: 0}
     - target: {fileID: 1949895812655578899, guid: 767df166c0ebc07419e8560188790640,
         type: 3}
       propertyPath: m_Sprite
@@ -162,6 +159,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5047645907707737039, guid: 767df166c0ebc07419e8560188790640,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.475
       objectReference: {fileID: 0}
     - target: {fileID: 5436848169293601266, guid: 767df166c0ebc07419e8560188790640,
         type: 3}
@@ -228,12 +230,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5047645907707737039, guid: 767df166c0ebc07419e8560188790640,
+    - target: {fileID: 7095276924438032093, guid: 767df166c0ebc07419e8560188790640,
         type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.475
+      propertyPath: m_Name
+      value: WeaponCannonMed-03
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5436848169293601266, guid: 767df166c0ebc07419e8560188790640, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 767df166c0ebc07419e8560188790640, type: 3}
 --- !u!4 &640635017751066378 stripped
 Transform:

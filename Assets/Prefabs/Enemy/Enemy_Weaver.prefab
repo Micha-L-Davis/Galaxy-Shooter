@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b675a8b014110c14f9f2b11c43c79a86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ySpeed: 4
+  _ySpeed: 3.25
   _enemyLaserPrefab: {fileID: 4630619388445086322, guid: ecd4ec57855226c4fa8d33eeaaa545f9,
     type: 3}
   _enemyRearLaserPrefab: {fileID: 3043741781388956078, guid: 28f37b7e286a95646bb7dd820b84c97b,
@@ -55,8 +55,11 @@ MonoBehaviour:
     type: 3}
   _explosionPrefab: {fileID: 418433537383931242, guid: daa362500550df94b8e0170a4e956f62,
     type: 3}
+  _spawnManager: {fileID: 0}
   _enemyID: 1
   _canRearFire: 0
+  _detectionRange: 7
+  _rammingSpeedMultiplier: 1.25
 --- !u!50 &6275924998997489818
 Rigidbody2D:
   serializedVersion: 4

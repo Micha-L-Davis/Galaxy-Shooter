@@ -1025,7 +1025,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scoreText: {fileID: 1834781068}
-  _ammoText: {fileID: 725135409}
+  ammoText: {fileID: 725135409}
   _livesImg: {fileID: 1734302316}
   _liveSprites:
   - {fileID: 21300000, guid: ba53e111f0125654cabfd4eefaf3a657, type: 3}
@@ -2094,7 +2094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1486b9e2bce42f4f8114c0ce9c4b41e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 0.25
+  speed: 0.1
 --- !u!64 &834593586
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2891,8 +2891,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2a4474110c945647a65ea5745c38a8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _intensity: 0
-  _settle_rate: 0
+  intensity: 0
+  settle_rate: 0
   _wiggle: 0.25
 --- !u!1 &1384726466
 GameObject:
@@ -3435,7 +3435,7 @@ MonoBehaviour:
   _score: 0
   _lives: 3
   _boostFuel: 400
-  _boostMax: 400
+  boostMax: 100
   _fireRate: 0.15
   _ammoCount: 15
   _isBoosting: 0
@@ -4039,7 +4039,7 @@ MonoBehaviour:
   - {fileID: 7740149300789555877, guid: a0691c1526f23f74b8532a9b05919119, type: 3}
   - {fileID: 3121835716681461402, guid: 9c9cd0811dfcfba438ac76394b9d38e9, type: 3}
   _waveCount: 0
-  _powerUpList: []
+  powerUpList: []
 --- !u!4 &1840658234
 Transform:
   m_ObjectHideFlags: 0
