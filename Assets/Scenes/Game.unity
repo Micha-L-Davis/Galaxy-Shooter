@@ -1670,7 +1670,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Press the 'R' key to restart the level.
+  m_Text: Press the 'R' key to restart at wave 1
 --- !u!222 &708090183
 CanvasRenderer:
   m_ObjectHideFlags: 0
