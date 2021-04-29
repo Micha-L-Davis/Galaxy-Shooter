@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _eMPBurstPrefab;
     [SerializeField]
+    private GameObject _tractor;
+    [SerializeField]
     private SpriteRenderer _shieldSprite;
     [SerializeField]
     private GameObject _leftEngine, _rightEngine;
@@ -133,8 +135,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.C))
         {
-            
-
+            StartCoroutine(TractorFlashRoutine());
             for (int i = 0; i < _spawnManager.powerUpList.Count; i++)
             {
                 GameObject powerup = _spawnManager.powerUpList[i];
@@ -143,6 +144,7 @@ public class Player : MonoBehaviour
                 powerup.GetComponent<Powerup>().TractorBeam(range, bearing);
             }
         }
+
         //if c is pressed down
         //for each powerup on the list
         //powerup.tractorbeam()
@@ -359,6 +361,18 @@ public class Player : MonoBehaviour
 
         
         StartCoroutine(BoostRechargeRoutine());
+    }
+
+    IEnumerator TractorFlashRoutine()
+    {
+        _tractor.SetActive(true);
+        yield return new WaitForSeconds(.05f);
+        _tractor.SetActive(false);
+        yield return new WaitForSeconds(.05f);
+        _tractor.SetActive(true);
+        yield return new WaitForSeconds(.175f);
+        _tractor.SetActive(false);
+
     }
     IEnumerator BoostDrainRoutine()
     {
