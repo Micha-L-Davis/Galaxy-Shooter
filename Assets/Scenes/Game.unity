@@ -352,7 +352,7 @@ Transform:
   m_LocalScale: {x: 5, y: 4, z: 2}
   m_Children: []
   m_Father: {fileID: 1758359732}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &143067196
 PrefabInstance:
@@ -1002,7 +1002,7 @@ Transform:
   m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_Children: []
   m_Father: {fileID: 1758359732}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &350778054
 SpriteRenderer:
@@ -3208,7 +3208,7 @@ Transform:
   m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_Children: []
   m_Father: {fileID: 1758359732}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1614185035
 SpriteRenderer:
@@ -3490,7 +3490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _afterburner: 1.5
+  _afterburner: 2
   _boostFactor: 2
   _laserPrefab: {fileID: 6692897607179328497, guid: 789675521e6b1b440922c5311107cff3,
     type: 3}
@@ -3511,9 +3511,9 @@ MonoBehaviour:
   _thrusters: {fileID: 1938248383}
   _camera: {fileID: 1280493731}
   _laserSfx: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
-  _boostDrainRate: 0.5
-  _boostRechargeRate: 1
-  _boostCooldown: 1
+  _boostDrainRate: 1.5
+  _boostRechargeRate: 3
+  _boostCooldown: 1.5
   _score: 0
   _lives: 3
   _boostFuel: 100
@@ -3635,10 +3635,10 @@ Transform:
   m_Children:
   - {fileID: 1125533053}
   - {fileID: 1938248384}
+  - {fileID: 104322007}
   - {fileID: 350778053}
   - {fileID: 1614185034}
   - {fileID: 1976657483}
-  - {fileID: 104322007}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4895,7 +4895,7 @@ Transform:
   - {fileID: 1786478822}
   - {fileID: 1384726467}
   m_Father: {fileID: 1758359732}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2075319581
 PrefabInstance:
