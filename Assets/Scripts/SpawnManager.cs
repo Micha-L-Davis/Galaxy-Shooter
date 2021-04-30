@@ -146,7 +146,7 @@ public class SpawnManager : MonoBehaviour
     {
         if (_waveCount == 13)
         {
-            Instantiate(_enemies[5], new Vector3(0, 3, 0), Quaternion.identity);
+            Instantiate(_enemies[5], new Vector3(0, 9, 0), Quaternion.identity);
         }
         else
         {

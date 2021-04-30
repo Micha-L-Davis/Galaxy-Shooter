@@ -30,6 +30,7 @@ public class BigBadBoss : MonoBehaviour
     public int stageTwoProgress = 0;
     private Player _player;
     Vector3 _moveDirection = Vector3.left;
+    private bool _initialBlocking;
 
 
 
@@ -40,10 +41,9 @@ public class BigBadBoss : MonoBehaviour
         {
             Debug.LogError("The Player is NULL");
         }
-
+        _initialBlocking = true;
         BossChoreography();
     }
-
 
     void Update()
     {
@@ -51,6 +51,18 @@ public class BigBadBoss : MonoBehaviour
         switch (_stage)
         {
             case 1:
+                if (_initialBlocking == true)
+                {
+                    if (transform.position.y >= 3.25)
+                    {
+                        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+                    }
+                    else
+                    {
+                        _initialBlocking = false;
+                    }
+                }
+                
                 transform.position = new Vector3(Mathf.Clamp(transform.position.x, -4.5f, 4.5f), Mathf.Clamp(transform.position.y, 3, 6.25f), 0);
                 if (_initialMove == true)
                 {
@@ -133,7 +145,6 @@ public class BigBadBoss : MonoBehaviour
         if (stageTwoProgress == 2)
         {
             _stage = 3;
-            Debug.Log("Entering stage three, cleaning up damaged components");
             stageTwoProgress = 0;
             Instantiate(_explosionPrefab, _stageTwoBodyLeft.transform.position + new Vector3(-3, 0, 0), Quaternion.identity);
             Destroy(_stageTwoBodyLeft.gameObject, 1);
@@ -317,9 +328,7 @@ public class BigBadBoss : MonoBehaviour
             if (_blastOrigin1L != null)
             {
                 Instantiate(_laserPrefab, _blastOrigin1L.transform.position, Quaternion.identity);
-
             }
-            
             if (_blastOrigin1R != null)
             {
                 Instantiate(_laserPrefab, _blastOrigin1R.transform.position, Quaternion.identity);
